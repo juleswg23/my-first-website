@@ -1,9 +1,13 @@
-var http = require("http");
+let port = process.env.PORT || process.argv[2] || 8081;
 
-http.createServer(function (request, response) {
+let http = require("http");
+
+let server = http.createServer(function (request, response) {
     response.writeHead(200, {'Content-Type' : 'text/plain'});
 
     response.end('Hello world!\n');
-}).listen(8081)
+});
 
-console.log('Server running at http://127.0.0.1:8081/');
+server.listen(port, function() {
+    console.log('app up on port: ' + port);
+})
