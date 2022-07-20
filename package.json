@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node main.js"
+  },
+
   "dependencies": {
     "latest-version": "^7.0.0"
   }
