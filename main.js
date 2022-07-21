@@ -1,17 +1,16 @@
-let express = require("express");
-let app = express();
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 8081;
 
-let port = process.env.PORT || 8081;
-
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
     res.send("Hello from Express");
 })
 
-var server = app.listen(port, function () {
+const server = app.listen(p, function () {
     let host = server.address().address
-    let port = server.address().port
+    let p = server.address().port
 
-    console.log("Example app listening at http://%s:%s", host, port);
+    console.log("Example app listening at http://%s:%s", host, p);
 })
 
 
