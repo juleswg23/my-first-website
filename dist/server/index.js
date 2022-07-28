@@ -1,30 +1,36 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const tictactoe_js_1 = require("./modules/tictactoe.js");
-const http = require("http");
-const express = require("express");
-const socketIo = require("socket.io");
-const app = express();
-//const path = require('path'); //mine
-const fs = require("fs");
+// const http = require("http")
+// const express = require("express");
+// const socketIo = require("socket.io");
+// const path = require('path'); //mine
+// const fs = require("fs");
+const express_1 = __importDefault(require("express"));
+const http_1 = __importDefault(require("http"));
+//import socketIo from "socket.io";
+const fs_1 = __importDefault(require("fs"));
+const app = (0, express_1.default)();
 const port = process.env.PORT || 8081;
-const server = http.Server(app);
+const server = new http_1.default.Server(app);
 server.listen(port, () => {
     console.log("Example app listening at port: %s", port);
 });
-const io = socketIo(server);
-const clients = {};
 //app.use('/static', express.static(path.join(__dirname, "/../client/")))
-app.use(express.static(__dirname + "/../client/"));
-app.use(express.static(__dirname + "/../node_modules/"));
-//app.set('view engine', 'jade'); // old?
+app.use(express_1.default.static(__dirname + "/../client/"));
+app.use(express_1.default.static(__dirname + "/../node_modules/"));
 app.get("/", (req, res) => {
     console.log("Sent to %s", req.headers["user-agent"]);
     //res.sendFile(path.join(__dirname + "/../client/index.html"));
-    const stream = fs.createReadStream(__dirname + "/../client/index.html");
+    const stream = fs_1.default.createReadStream(__dirname + "/../client/html/index.html");
     stream.pipe(res);
 });
-let players = {}; // opponent: scoket.id of the opponent, symbol = "X" | "O", socket: player's socket
+const io = require("socket.io")(server);
+let clients = {};
+let players = {}; // opponent: socket.id of the opponent, symbol = "X" | "O", socket: player's socket
 let games = {};
 let unmatched;
 io.on("connection", function (socket) {
@@ -37,33 +43,36 @@ io.on("connection", function (socket) {
         socket.broadcast.emit("clientdisconnect", id);
     });
     join(socket); // Fill 'players' data structure
-    if (opponentOf(socket)) { // If the current player has an opponent the game can begin
+    const opp = opponentOf(socket);
+    if (opp) { // If the current player has an opponent the game can begin
         socket.emit("game.begin", {
             symbol: players[socket.id].symbol
         });
-        opponentOf(socket).emit("game.begin", {
-            symbol: players[opponentOf(socket).id].symbol
+        opp.emit("game.begin", {
+            symbol: players[opp.id].symbol
         });
-        newGame(socket, opponentOf(socket));
+        newGame(socket, opp);
     }
     // Event for when any player makes a move
     socket.on("make.move", function (data) {
-        if (!opponentOf(socket)) {
+        const opp = opponentOf(socket);
+        if (!opp) {
             // This shouldn't be possible since if a player doens't have an opponent the game board is disabled
             return;
         }
         //validation
-        let gameID = getGameID(socket, opponentOf(socket));
+        let gameID = getGameID(socket, opp);
         let game = games[gameID];
         game.gameMove(data.position);
         console.log("Move attempted by player %s at pos %s", socket.id, data.position);
         socket.emit("move.made", data); // Emit for the player who made the move
-        opponentOf(socket).emit("move.made", data); // Emit for the opponent
+        opp.emit("move.made", data); // Emit for the opponent
     });
     // Event to inform player that the opponent left
     socket.on("disconnect", function () {
-        if (opponentOf(socket)) {
-            opponentOf(socket).emit("opponent.left");
+        const opp = opponentOf(socket);
+        if (opp) {
+            opp.emit("opponent.left");
         }
     });
 });
@@ -87,10 +96,11 @@ function join(socket) {
     }
 }
 function opponentOf(socket) {
-    if (!players[socket.id].opponent) {
-        return;
+    const opp = players[socket.id].opponent;
+    if (opp) {
+        return players[opp].socket;
     }
-    return players[players[socket.id].opponent].socket;
+    return null;
 }
 function newGame(socket, opponent) {
     let gameID = getGameID(socket, opponent);
