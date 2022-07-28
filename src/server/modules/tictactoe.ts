@@ -1,35 +1,39 @@
-const url = window.location.origin;
-let socket = io.connect(url);
+// const url = window.location.origin;
+// let socket = io.connect(url);
 
-const Player = {
-    X: "X",
-    Y: "Y",
-    EMPTY: " "
+enum Player {
+    X = "X",
+    Y = "Y",
+    EMPTY = " "
 }
 
-const Result = {
-    X: "X",
-    Y: "Y",
-    TIE: "Tie",
-    NO_RESULT: "No Result"
+export enum Result {
+    X = "x-wins",
+    Y = "y-wins",
+    TIE = "tie",
+    NO_RESULT = "no-result"
 }
 
 class Board {
+    squares: Array<Player>;
+    turn: Player;
+
     constructor() {
         this.squares = new Array(9).fill(Player.EMPTY);
-        this.turn = Player.X
+        this.turn = Player.X;
     }
 
-    static possibleWins = [[0, 1, 2],
-                           [3, 4, 5],
-                           [6, 7, 8],
-                           [0, 3, 6],
-                           [1, 4, 7],
-                           [2, 5, 8],
-                           [0, 4, 8],
-                           [2, 4, 6]]
+    static possibleWins: number[][] = 
+                       [[0, 1, 2],
+                        [3, 4, 5],
+                        [6, 7, 8],
+                        [0, 3, 6],
+                        [1, 4, 7],
+                        [2, 5, 8],
+                        [0, 4, 8],
+                        [2, 4, 6]]
 
-    prettyprint() {
+    prettyprint(): string {
         return  "     |     |     \n" +
                 "  " + this.squares[0] + "  |  " + this.squares[1] + "  |  " + this.squares[2] + "  \n" +
                 "_____|_____|_____\n" +
@@ -42,27 +46,27 @@ class Board {
     }
 
     // Check if the player went in an empty square
-    isLegal(location) {
-        return this.squares[location] == Player.EMPTY
+    isLegal(location: number): boolean {
+        return this.squares[location] == Player.EMPTY;
     }
 
     // Return one of the result enum possibilities
-    checkWin() {
-        for (let arr in this.possibleWins) {
+    checkWin(): Result {
+        for (let arr of Board.possibleWins) {
             if (this.squares[arr[0]] == this.squares[arr[1]] && 
                 this.squares[arr[0]] == this.squares[arr[2]] &&
                 this.squares[arr[0]] != Player.EMPTY) {
-                    return this.squares[arr[0]]
+                    return (this.squares[arr[0]] == Player.X ? Result.X : Result.Y);
                 }
         }
 
         if (this.squares.includes(Player.EMPTY)) {
-            return Result.NO_RESULT
+            return Result.NO_RESULT;
         }
-        return Result.TIE
+        return Result.TIE;
     }
 
-    makeMove(location) {
+    makeMove(location: number): boolean {
         if (this.isLegal(location)) {
             // update tile
             this.squares[location] = this.turn;
@@ -82,21 +86,21 @@ class Board {
     }
 }
 
+export class Game {
+    board: Board;
+    player1: string;
+    player2: string;
 
-// Entry point
-(function() {
-    board = new Board()
+    constructor(p1: string, p2: string) {
+        this.board = new Board();
+        this.player1 = p1;
+        this.player2 = p2;
+    }
 
-    readline.question(`What's your name?`, name => {
-        console.log(`Hi ${name}!`);
-        readline.close();
-      });
-    
-    console.log("hii");
-
-    // while (board.checkWin() == Result.NO_RESULT) {
-    //     console.log(board.prettyprint());
-        
-    // }
-
-})();
+    gameMove(location: number): string {
+        if (this.board.makeMove(location)) {
+            return this.board.checkWin().toString();
+        }
+        return "illegal-move";
+    }
+}

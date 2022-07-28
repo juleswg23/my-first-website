@@ -1,8 +1,10 @@
+import { Game } from "./modules/tictactoe.js";
+
 const http = require("http")
 const express = require("express");
 const socketIo = require("socket.io");
 const app = express();
-const path = require('path'); //mind
+//const path = require('path'); //mine
 
 const fs = require("fs");
 
@@ -30,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 let players = {}; // opponent: scoket.id of the opponent, symbol = "X" | "O", socket: player's socket
+let games = {};
 let unmatched;
 
 io.on("connection", function(socket) {
@@ -54,6 +57,9 @@ io.on("connection", function(socket) {
         opponentOf(socket).emit("game.begin", { // Send the game.begin event to the opponent
             symbol: players[opponentOf(socket).id].symbol 
         });
+
+        newGame(socket, opponentOf(socket));
+        
     }
 
 
@@ -64,7 +70,12 @@ io.on("connection", function(socket) {
             return;
         }
 
-        // Validation of the moves can be done here
+        //validation
+        let gameID = getGameID(socket, opponentOf(socket));
+        let game = games[gameID];
+        game.gameMove(data.position);
+        console.log("Move attempted by player %s at pos %s", socket.id, data.position);
+
 
         socket.emit("move.made", data); // Emit for the player who made the move
         opponentOf(socket).emit("move.made", data); // Emit for the opponent
@@ -106,4 +117,13 @@ function opponentOf(socket) {
         return;
     }
     return players[players[socket.id].opponent].socket;
+}
+
+function newGame(socket, opponent) {
+    gameID = getGameID(socket, opponent);
+    games[gameID] = new Game(socket.id, opponent.id);
+}
+
+function getGameID(socket, opponent) {
+    return [socket.id, opponent.id].sort().join("");
 }
