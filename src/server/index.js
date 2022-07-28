@@ -120,7 +120,7 @@ function opponentOf(socket) {
 }
 
 function newGame(socket, opponent) {
-    gameID = getGameID(socket, opponent);
+    let gameID = getGameID(socket, opponent);
     games[gameID] = new Game(socket.id, opponent.id);
 }
 

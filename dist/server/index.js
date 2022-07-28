@@ -93,7 +93,7 @@ function opponentOf(socket) {
     return players[players[socket.id].opponent].socket;
 }
 function newGame(socket, opponent) {
-    gameID = getGameID(socket, opponent);
+    let gameID = getGameID(socket, opponent);
     games[gameID] = new tictactoe_js_1.Game(socket.id, opponent.id);
 }
 function getGameID(socket, opponent) {
