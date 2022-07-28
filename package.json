@@ -4,7 +4,7 @@
     "tsc": "tsc",
     "clean": "rimraf dist/",
     "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/",
-    "build": "npm run tsc && npm run copy-files"
+    "build": "npm run clean && npm run tsc && npm run copy-files"
   },
   "dependencies": {
     "ejs": "^3.1.8",
