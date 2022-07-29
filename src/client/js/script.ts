@@ -1,10 +1,7 @@
 
-const url = window.location.origin;
+//const url = window.location.origin;
 
-//import { Socket } from "socket.io";
 import io from "socket.io-client";
-// edits here!!
-
 let socket = io();
 
 let myTurn: boolean = true;
