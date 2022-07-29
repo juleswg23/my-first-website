@@ -1,9 +1,22 @@
 const path = require( 'path' );
+const { node } = require('webpack');
+//const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 
     // bundling mode
     mode: 'production',
+
+    devtool: 'source-map',
+
+    target: 'web',
+
+    externals: [
+        {
+          'utf-8-validate': 'commonjs utf-8-validate',
+          bufferutil: 'commonjs bufferutil',
+        },
+      ],
 
     // entry files
     entry: './src/client/js/script.ts',
@@ -16,7 +29,7 @@ module.exports = {
 
     // file resolutions
     resolve: {
-        extensions: [ '.ts', '.*' ],
+        extensions: [ '.ts', '.tsx', '.js' ],
     },
 
     // loaders
