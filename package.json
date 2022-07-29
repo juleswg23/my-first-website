@@ -1,10 +1,22 @@
 {
+  "name": "my-first-website",
+  "version": "1.0.0",
+  "description": "A simple first heroku app",
+  "author": "Jules Walzer-Goldfeld",
+  "keywords": [
+    "heroku",
+    "server",
+    "socket",
+    "io",
+    "tic tac toe"
+  ],
   "scripts": {
     "start": "node dist/server/index.js",
     "tsc": "tsc",
     "clean": "rimraf dist/",
     "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/",
-    "build": "npm run clean && npm run tsc && npm run copy-files"
+    "build": "npm run clean && npm run tsc && npm run webpack && npm run copy-files",
+    "webpack": "webpack"
   },
   "dependencies": {
     "express": "^4.18.1",
@@ -12,14 +24,19 @@
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
-    "typescript": "^4.7.4",
     "@types/express": "^4.17.13",
     "@types/jquery": "^3.5.14",
     "@types/socket.io": "^3.0.2",
     "copyfiles": "^2.4.1",
     "rimraf": "^3.0.2",
     "socket.io-client": "^4.5.1",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juleswg23/my-first-website"
   }
 }
