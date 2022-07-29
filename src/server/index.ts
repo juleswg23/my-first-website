@@ -1,18 +1,17 @@
 import { Game } from "./modules/tictactoe.js";
 
 // const http = require("http")
-// const express = require("express");
+// const Express = require("express");
 // const socketIo = require("socket.io");
 // const path = require('path'); //mine
 // const fs = require("fs");
 
-import express from "express";
+import Express from "express";
 import http from 'http';
-//import socketIo from "socket.io";
 import fs from "fs";
 import { Socket } from "socket.io";
 
-const app = express();
+const app: Express.Application = Express();
 
 const port = process.env.PORT || 8081;
 const server = new http.Server(app);
@@ -21,12 +20,12 @@ server.listen(port, () => {
     console.log("Example app listening at port: %s", port);
 });
 
-//app.use('/static', express.static(path.join(__dirname, "/../client/")))
-app.use(express.static(__dirname + "/../client/"));
-app.use(express.static(__dirname + "/../node_modules/"));
+//app.use('/static', Express.static(path.join(__dirname, "/../client/")))
+app.use(Express.static(__dirname + "/../client/"));
+app.use(Express.static(__dirname + "/../node_modules/"));
 
 
-app.get("/", (req, res) => {
+app.get("/", (req: Express.Request, res: Express.Response) => {
     console.log("Sent to %s", req.headers["user-agent"]);
     //res.sendFile(path.join(__dirname + "/../client/index.html"));
     const stream = fs.createReadStream(__dirname + "/../client/html/index.html");
@@ -59,18 +58,18 @@ io.on("connection", function(socket: Socket) {
 
     join(socket); // Fill 'players' data structure
 
-    const opp : Socket | null = opponentOf(socket);
+    const oppSocket : Socket | null = opponentOf(socket);
 
-    if (opp) { // If the current player has an opponent the game can begin
+    if (oppSocket) { // If the current player has an opponent the game can begin
         socket.emit("game.begin", { // Send the game.begin event to the player
             symbol: players[socket.id].symbol
         });
 
-        opp.emit("game.begin", { // Send the game.begin event to the opponent
-            symbol: players[opp.id].symbol 
+        oppSocket.emit("game.begin", { // Send the game.begin event to the opponent
+            symbol: players[oppSocket.id].symbol 
         });
 
-        newGame(socket, opp);
+        newGame(socket, oppSocket);
         
     }
 

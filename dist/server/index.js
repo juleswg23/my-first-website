@@ -5,13 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const tictactoe_js_1 = require("./modules/tictactoe.js");
 // const http = require("http")
-// const express = require("express");
+// const Express = require("express");
 // const socketIo = require("socket.io");
 // const path = require('path'); //mine
 // const fs = require("fs");
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
-//import socketIo from "socket.io";
 const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8081;
@@ -19,7 +18,7 @@ const server = new http_1.default.Server(app);
 server.listen(port, () => {
     console.log("Example app listening at port: %s", port);
 });
-//app.use('/static', express.static(path.join(__dirname, "/../client/")))
+//app.use('/static', Express.static(path.join(__dirname, "/../client/")))
 app.use(express_1.default.static(__dirname + "/../client/"));
 app.use(express_1.default.static(__dirname + "/../node_modules/"));
 app.get("/", (req, res) => {
@@ -43,15 +42,15 @@ io.on("connection", function (socket) {
         socket.broadcast.emit("clientdisconnect", id);
     });
     join(socket); // Fill 'players' data structure
-    const opp = opponentOf(socket);
-    if (opp) { // If the current player has an opponent the game can begin
+    const oppSocket = opponentOf(socket);
+    if (oppSocket) { // If the current player has an opponent the game can begin
         socket.emit("game.begin", {
             symbol: players[socket.id].symbol
         });
-        opp.emit("game.begin", {
-            symbol: players[opp.id].symbol
+        oppSocket.emit("game.begin", {
+            symbol: players[oppSocket.id].symbol
         });
-        newGame(socket, opp);
+        newGame(socket, oppSocket);
     }
     // Event for when any player makes a move
     socket.on("make.move", function (data) {

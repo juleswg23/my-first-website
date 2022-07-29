@@ -1,5 +1,8 @@
 "use strict";
 const url = window.location.origin;
+//import { Socket } from "socket.io";
+//import { io } from "socket.io-client";
+// @ts-ignore
 let socket = io();
 let myTurn = true;
 let symbol;
@@ -10,7 +13,10 @@ function getBoardState() {
      'X', 'O' or '' (empty).
     */
     $(".board button").each(function () {
-        obj[$(this).attr("id")] = $(this).text() || "";
+        let id = $(this).attr("id");
+        if (id) {
+            obj[id] = $(this).text() || "";
+        }
     });
     return obj;
 }
@@ -29,8 +35,8 @@ function isGameOver() {
         state.r0c2 + state.r1c1 + state.r2c0 // Secondary diagonal
     ];
     // Loop through all the rows looking for a match
-    for (let i = 0; i < rows.length; i++) {
-        if (rows[i] === matches[0] || rows[i] === matches[1]) {
+    for (let elem of rows) {
+        if (elem === matches[0] || elem === matches[1]) {
             return true;
         }
     }
@@ -39,7 +45,7 @@ function isGameOver() {
 function renderTurnMessage() {
     if (!myTurn) { // If not player's turn disable the board
         $("#message").text("Your opponent's turn");
-        $(".board button").attr("disabled", true);
+        $(".board button").prop("disabled", true);
     }
     else { // Enable it otherwise
         $("#message").text("Your turn.");
@@ -50,12 +56,12 @@ function makeMove(e) {
     if (!myTurn) {
         return; // Shouldn't happen since the board is disabled
     }
-    if ($(this).text().length) {
+    if ($(e.target).text().length) {
         return; // If cell is already checked
     }
     socket.emit("make.move", {
         symbol: symbol,
-        position: $(this).attr("id")
+        position: $(e.target).attr("id")
     });
 }
 // Bind event on players move
@@ -74,7 +80,7 @@ socket.on("move.made", function (data) {
         else {
             $("#message").text("You won!");
         }
-        $(".board button").attr("disabled", true); // Disable board
+        $(".board button").prop("disabled", true); // Disable board
     }
 });
 // Bind event for game begin
@@ -86,10 +92,10 @@ socket.on("game.begin", function (data) {
 // Bind on event for opponent leaving the game
 socket.on("opponent.left", function () {
     $("#message").text("Your opponent left the game.");
-    $(".board button").attr("disabled", true);
+    $(".board button").attr("disabled", ""); //OPTION 1
 });
 // Binding buttons on the board
 $(function () {
-    $(".board button").attr("disabled", true); // Disable board at the beginning
+    $(".board button").prop("disabled", true); // Disable board at the beginning
     $(".board> button").on("click", makeMove);
 });
