@@ -1,2 +1,2307 @@
-(()=>{var e={802:(e,t,s)=>{t.formatArgs=function(t){if(t[0]=(this.useColors?"%c":"")+this.namespace+(this.useColors?" %c":" ")+t[0]+(this.useColors?"%c ":" ")+"+"+e.exports.humanize(this.diff),!this.useColors)return;const s="color: "+this.color;t.splice(1,0,s,"color: inherit");let n=0,r=0;t[0].replace(/%[a-zA-Z%]/g,(e=>{"%%"!==e&&(n++,"%c"===e&&(r=n))})),t.splice(r,0,s)},t.save=function(e){try{e?t.storage.setItem("debug",e):t.storage.removeItem("debug")}catch(e){}},t.load=function(){let e;try{e=t.storage.getItem("debug")}catch(e){}return!e&&"undefined"!=typeof process&&"env"in process&&(e=process.env.DEBUG),e},t.useColors=function(){return!("undefined"==typeof window||!window.process||"renderer"!==window.process.type&&!window.process.__nwjs)||("undefined"==typeof navigator||!navigator.userAgent||!navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/))&&("undefined"!=typeof document&&document.documentElement&&document.documentElement.style&&document.documentElement.style.WebkitAppearance||"undefined"!=typeof window&&window.console&&(window.console.firebug||window.console.exception&&window.console.table)||"undefined"!=typeof navigator&&navigator.userAgent&&navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/)&&parseInt(RegExp.$1,10)>=31||"undefined"!=typeof navigator&&navigator.userAgent&&navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/))},t.storage=function(){try{return localStorage}catch(e){}}(),t.destroy=(()=>{let e=!1;return()=>{e||(e=!0,console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."))}})(),t.colors=["#0000CC","#0000FF","#0033CC","#0033FF","#0066CC","#0066FF","#0099CC","#0099FF","#00CC00","#00CC33","#00CC66","#00CC99","#00CCCC","#00CCFF","#3300CC","#3300FF","#3333CC","#3333FF","#3366CC","#3366FF","#3399CC","#3399FF","#33CC00","#33CC33","#33CC66","#33CC99","#33CCCC","#33CCFF","#6600CC","#6600FF","#6633CC","#6633FF","#66CC00","#66CC33","#9900CC","#9900FF","#9933CC","#9933FF","#99CC00","#99CC33","#CC0000","#CC0033","#CC0066","#CC0099","#CC00CC","#CC00FF","#CC3300","#CC3333","#CC3366","#CC3399","#CC33CC","#CC33FF","#CC6600","#CC6633","#CC9900","#CC9933","#CCCC00","#CCCC33","#FF0000","#FF0033","#FF0066","#FF0099","#FF00CC","#FF00FF","#FF3300","#FF3333","#FF3366","#FF3399","#FF33CC","#FF33FF","#FF6600","#FF6633","#FF9900","#FF9933","#FFCC00","#FFCC33"],t.log=console.debug||console.log||(()=>{}),e.exports=s(804)(t);const{formatters:n}=e.exports;n.j=function(e){try{return JSON.stringify(e)}catch(e){return"[UnexpectedJSONParseError]: "+e.message}}},804:(e,t,s)=>{e.exports=function(e){function t(e){let s,r,o,i=null;function a(...e){if(!a.enabled)return;const n=a,r=Number(new Date),o=r-(s||r);n.diff=o,n.prev=s,n.curr=r,s=r,e[0]=t.coerce(e[0]),"string"!=typeof e[0]&&e.unshift("%O");let i=0;e[0]=e[0].replace(/%([a-zA-Z%])/g,((s,r)=>{if("%%"===s)return"%";i++;const o=t.formatters[r];if("function"==typeof o){const t=e[i];s=o.call(n,t),e.splice(i,1),i--}return s})),t.formatArgs.call(n,e),(n.log||t.log).apply(n,e)}return a.namespace=e,a.useColors=t.useColors(),a.color=t.selectColor(e),a.extend=n,a.destroy=t.destroy,Object.defineProperty(a,"enabled",{enumerable:!0,configurable:!1,get:()=>null!==i?i:(r!==t.namespaces&&(r=t.namespaces,o=t.enabled(e)),o),set:e=>{i=e}}),"function"==typeof t.init&&t.init(a),a}function n(e,s){const n=t(this.namespace+(void 0===s?":":s)+e);return n.log=this.log,n}function r(e){return e.toString().substring(2,e.toString().length-2).replace(/\.\*\?$/,"*")}return t.debug=t,t.default=t,t.coerce=function(e){return e instanceof Error?e.stack||e.message:e},t.disable=function(){const e=[...t.names.map(r),...t.skips.map(r).map((e=>"-"+e))].join(",");return t.enable(""),e},t.enable=function(e){let s;t.save(e),t.namespaces=e,t.names=[],t.skips=[];const n=("string"==typeof e?e:"").split(/[\s,]+/),r=n.length;for(s=0;s<r;s++)n[s]&&("-"===(e=n[s].replace(/\*/g,".*?"))[0]?t.skips.push(new RegExp("^"+e.slice(1)+"$")):t.names.push(new RegExp("^"+e+"$")))},t.enabled=function(e){if("*"===e[e.length-1])return!0;let s,n;for(s=0,n=t.skips.length;s<n;s++)if(t.skips[s].test(e))return!1;for(s=0,n=t.names.length;s<n;s++)if(t.names[s].test(e))return!0;return!1},t.humanize=s(810),t.destroy=function(){console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.")},Object.keys(e).forEach((s=>{t[s]=e[s]})),t.names=[],t.skips=[],t.formatters={},t.selectColor=function(e){let s=0;for(let t=0;t<e.length;t++)s=(s<<5)-s+e.charCodeAt(t),s|=0;return t.colors[Math.abs(s)%t.colors.length]},t.enable(t.load()),t}},810:e=>{var t=1e3,s=60*t,n=60*s,r=24*n;function o(e,t,s,n){var r=t>=1.5*s;return Math.round(e/s)+" "+n+(r?"s":"")}e.exports=function(e,i){i=i||{};var a,c,h=typeof e;if("string"===h&&e.length>0)return function(e){if(!((e=String(e)).length>100)){var o=/^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(e);if(o){var i=parseFloat(o[1]);switch((o[2]||"ms").toLowerCase()){case"years":case"year":case"yrs":case"yr":case"y":return 315576e5*i;case"weeks":case"week":case"w":return 6048e5*i;case"days":case"day":case"d":return i*r;case"hours":case"hour":case"hrs":case"hr":case"h":return i*n;case"minutes":case"minute":case"mins":case"min":case"m":return i*s;case"seconds":case"second":case"secs":case"sec":case"s":return i*t;case"milliseconds":case"millisecond":case"msecs":case"msec":case"ms":return i;default:return}}}}(e);if("number"===h&&isFinite(e))return i.long?(a=e,(c=Math.abs(a))>=r?o(a,c,r,"day"):c>=n?o(a,c,n,"hour"):c>=s?o(a,c,s,"minute"):c>=t?o(a,c,t,"second"):a+" ms"):function(e){var o=Math.abs(e);return o>=r?Math.round(e/r)+"d":o>=n?Math.round(e/n)+"h":o>=s?Math.round(e/s)+"m":o>=t?Math.round(e/t)+"s":e+"ms"}(e);throw new Error("val is not a non-empty string or a valid number. val="+JSON.stringify(e))}},669:(e,t,s)=>{t.formatArgs=function(t){if(t[0]=(this.useColors?"%c":"")+this.namespace+(this.useColors?" %c":" ")+t[0]+(this.useColors?"%c ":" ")+"+"+e.exports.humanize(this.diff),!this.useColors)return;const s="color: "+this.color;t.splice(1,0,s,"color: inherit");let n=0,r=0;t[0].replace(/%[a-zA-Z%]/g,(e=>{"%%"!==e&&(n++,"%c"===e&&(r=n))})),t.splice(r,0,s)},t.save=function(e){try{e?t.storage.setItem("debug",e):t.storage.removeItem("debug")}catch(e){}},t.load=function(){let e;try{e=t.storage.getItem("debug")}catch(e){}return!e&&"undefined"!=typeof process&&"env"in process&&(e=process.env.DEBUG),e},t.useColors=function(){return!("undefined"==typeof window||!window.process||"renderer"!==window.process.type&&!window.process.__nwjs)||("undefined"==typeof navigator||!navigator.userAgent||!navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/))&&("undefined"!=typeof document&&document.documentElement&&document.documentElement.style&&document.documentElement.style.WebkitAppearance||"undefined"!=typeof window&&window.console&&(window.console.firebug||window.console.exception&&window.console.table)||"undefined"!=typeof navigator&&navigator.userAgent&&navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/)&&parseInt(RegExp.$1,10)>=31||"undefined"!=typeof navigator&&navigator.userAgent&&navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/))},t.storage=function(){try{return localStorage}catch(e){}}(),t.destroy=(()=>{let e=!1;return()=>{e||(e=!0,console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."))}})(),t.colors=["#0000CC","#0000FF","#0033CC","#0033FF","#0066CC","#0066FF","#0099CC","#0099FF","#00CC00","#00CC33","#00CC66","#00CC99","#00CCCC","#00CCFF","#3300CC","#3300FF","#3333CC","#3333FF","#3366CC","#3366FF","#3399CC","#3399FF","#33CC00","#33CC33","#33CC66","#33CC99","#33CCCC","#33CCFF","#6600CC","#6600FF","#6633CC","#6633FF","#66CC00","#66CC33","#9900CC","#9900FF","#9933CC","#9933FF","#99CC00","#99CC33","#CC0000","#CC0033","#CC0066","#CC0099","#CC00CC","#CC00FF","#CC3300","#CC3333","#CC3366","#CC3399","#CC33CC","#CC33FF","#CC6600","#CC6633","#CC9900","#CC9933","#CCCC00","#CCCC33","#FF0000","#FF0033","#FF0066","#FF0099","#FF00CC","#FF00FF","#FF3300","#FF3333","#FF3366","#FF3399","#FF33CC","#FF33FF","#FF6600","#FF6633","#FF9900","#FF9933","#FFCC00","#FFCC33"],t.log=console.debug||console.log||(()=>{}),e.exports=s(231)(t);const{formatters:n}=e.exports;n.j=function(e){try{return JSON.stringify(e)}catch(e){return"[UnexpectedJSONParseError]: "+e.message}}},231:(e,t,s)=>{e.exports=function(e){function t(e){let s,r,o,i=null;function a(...e){if(!a.enabled)return;const n=a,r=Number(new Date),o=r-(s||r);n.diff=o,n.prev=s,n.curr=r,s=r,e[0]=t.coerce(e[0]),"string"!=typeof e[0]&&e.unshift("%O");let i=0;e[0]=e[0].replace(/%([a-zA-Z%])/g,((s,r)=>{if("%%"===s)return"%";i++;const o=t.formatters[r];if("function"==typeof o){const t=e[i];s=o.call(n,t),e.splice(i,1),i--}return s})),t.formatArgs.call(n,e),(n.log||t.log).apply(n,e)}return a.namespace=e,a.useColors=t.useColors(),a.color=t.selectColor(e),a.extend=n,a.destroy=t.destroy,Object.defineProperty(a,"enabled",{enumerable:!0,configurable:!1,get:()=>null!==i?i:(r!==t.namespaces&&(r=t.namespaces,o=t.enabled(e)),o),set:e=>{i=e}}),"function"==typeof t.init&&t.init(a),a}function n(e,s){const n=t(this.namespace+(void 0===s?":":s)+e);return n.log=this.log,n}function r(e){return e.toString().substring(2,e.toString().length-2).replace(/\.\*\?$/,"*")}return t.debug=t,t.default=t,t.coerce=function(e){return e instanceof Error?e.stack||e.message:e},t.disable=function(){const e=[...t.names.map(r),...t.skips.map(r).map((e=>"-"+e))].join(",");return t.enable(""),e},t.enable=function(e){let s;t.save(e),t.namespaces=e,t.names=[],t.skips=[];const n=("string"==typeof e?e:"").split(/[\s,]+/),r=n.length;for(s=0;s<r;s++)n[s]&&("-"===(e=n[s].replace(/\*/g,".*?"))[0]?t.skips.push(new RegExp("^"+e.slice(1)+"$")):t.names.push(new RegExp("^"+e+"$")))},t.enabled=function(e){if("*"===e[e.length-1])return!0;let s,n;for(s=0,n=t.skips.length;s<n;s++)if(t.skips[s].test(e))return!1;for(s=0,n=t.names.length;s<n;s++)if(t.names[s].test(e))return!0;return!1},t.humanize=s(241),t.destroy=function(){console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.")},Object.keys(e).forEach((s=>{t[s]=e[s]})),t.names=[],t.skips=[],t.formatters={},t.selectColor=function(e){let s=0;for(let t=0;t<e.length;t++)s=(s<<5)-s+e.charCodeAt(t),s|=0;return t.colors[Math.abs(s)%t.colors.length]},t.enable(t.load()),t}},241:e=>{var t=1e3,s=60*t,n=60*s,r=24*n;function o(e,t,s,n){var r=t>=1.5*s;return Math.round(e/s)+" "+n+(r?"s":"")}e.exports=function(e,i){i=i||{};var a,c,h=typeof e;if("string"===h&&e.length>0)return function(e){if(!((e=String(e)).length>100)){var o=/^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(e);if(o){var i=parseFloat(o[1]);switch((o[2]||"ms").toLowerCase()){case"years":case"year":case"yrs":case"yr":case"y":return 315576e5*i;case"weeks":case"week":case"w":return 6048e5*i;case"days":case"day":case"d":return i*r;case"hours":case"hour":case"hrs":case"hr":case"h":return i*n;case"minutes":case"minute":case"mins":case"min":case"m":return i*s;case"seconds":case"second":case"secs":case"sec":case"s":return i*t;case"milliseconds":case"millisecond":case"msecs":case"msec":case"ms":return i;default:return}}}}(e);if("number"===h&&isFinite(e))return i.long?(a=e,(c=Math.abs(a))>=r?o(a,c,r,"day"):c>=n?o(a,c,n,"hour"):c>=s?o(a,c,s,"minute"):c>=t?o(a,c,t,"second"):a+" ms"):function(e){var o=Math.abs(e);return o>=r?Math.round(e/r)+"d":o>=n?Math.round(e/n)+"h":o>=s?Math.round(e/s)+"m":o>=t?Math.round(e/t)+"s":e+"ms"}(e);throw new Error("val is not a non-empty string or a valid number. val="+JSON.stringify(e))}},747:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0});let r,o=(0,n(s(46)).default)(),i=!0;function a(){i?($("#message").text("Your turn."),$(".board button").removeAttr("disabled")):($("#message").text("Your opponent's turn"),$(".board button").prop("disabled",!0))}function c(e){i&&($(e.target).text().length||o.emit("make.move",{symbol:r,position:$(e.target).attr("id")}))}o.on("move.made",(function(e){$("#"+e.position).text(e.symbol),i=e.symbol!==r,function(){let e=function(){let e={};return $(".board button").each((function(){let t=$(this).attr("id");t&&(e[t]=$(this).text()||"")})),e}(),t=["XXX","OOO"],s=[e.r0c0+e.r0c1+e.r0c2,e.r1c0+e.r1c1+e.r1c2,e.r2c0+e.r2c1+e.r2c2,e.r0c0+e.r1c0+e.r2c0,e.r0c1+e.r1c1+e.r2c1,e.r0c2+e.r1c2+e.r2c2,e.r0c0+e.r1c1+e.r2c2,e.r0c2+e.r1c1+e.r2c0];for(let e of s)if(e===t[0]||e===t[1])return!0;return!1}()?(i?$("#message").text("You lost."):$("#message").text("You won!"),$(".board button").prop("disabled",!0)):a()})),o.on("game.begin",(function(e){r=e.symbol,i="X"===r,a()})),o.on("opponent.left",(function(){$("#message").text("Your opponent left the game."),$(".board button").attr("disabled","")})),$((function(){$(".board button").prop("disabled",!0),$(".board> button").on("click",c)}))},419:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.hasCORS=void 0;let s=!1;try{s="undefined"!=typeof XMLHttpRequest&&"withCredentials"in new XMLHttpRequest}catch(e){}t.hasCORS=s},754:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.decode=t.encode=void 0,t.encode=function(e){let t="";for(let s in e)e.hasOwnProperty(s)&&(t.length&&(t+="&"),t+=encodeURIComponent(s)+"="+encodeURIComponent(e[s]));return t},t.decode=function(e){let t={},s=e.split("&");for(let e=0,n=s.length;e<n;e++){let n=s[e].split("=");t[decodeURIComponent(n[0])]=decodeURIComponent(n[1])}return t}},222:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.parse=void 0;const s=/^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/,n=["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"];t.parse=function(e){const t=e,r=e.indexOf("["),o=e.indexOf("]");-1!=r&&-1!=o&&(e=e.substring(0,r)+e.substring(r,o).replace(/:/g,";")+e.substring(o,e.length));let i=s.exec(e||""),a={},c=14;for(;c--;)a[n[c]]=i[c]||"";return-1!=r&&-1!=o&&(a.source=t,a.host=a.host.substring(1,a.host.length-1).replace(/;/g,":"),a.authority=a.authority.replace("[","").replace("]","").replace(/;/g,":"),a.ipv6uri=!0),a.pathNames=function(e,t){const s=t.replace(/\/{2,9}/g,"/").split("/");return"/"!=t.substr(0,1)&&0!==t.length||s.splice(0,1),"/"==t.substr(t.length-1,1)&&s.splice(s.length-1,1),s}(0,a.path),a.queryKey=function(e,t){const s={};return t.replace(/(?:^|&)([^&=]*)=?([^&]*)/g,(function(e,t,n){t&&(s[t]=n)})),s}(0,a.query),a}},726:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.yeast=t.decode=t.encode=void 0;const s="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""),n={};let r,o=0,i=0;function a(e){let t="";do{t=s[e%64]+t,e=Math.floor(e/64)}while(e>0);return t}for(t.encode=a,t.decode=function(e){let t=0;for(i=0;i<e.length;i++)t=64*t+n[e.charAt(i)];return t},t.yeast=function(){const e=a(+new Date);return e!==r?(o=0,r=e):e+"."+a(o++)};i<64;i++)n[s[i]]=i},242:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.globalThisShim=void 0,t.globalThisShim="undefined"!=typeof self?self:"undefined"!=typeof window?window:Function("return this")()},679:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.parse=t.installTimerFunctions=t.transports=t.Transport=t.protocol=t.Socket=void 0;const n=s(481);Object.defineProperty(t,"Socket",{enumerable:!0,get:function(){return n.Socket}}),t.protocol=n.Socket.protocol;var r=s(870);Object.defineProperty(t,"Transport",{enumerable:!0,get:function(){return r.Transport}});var o=s(385);Object.defineProperty(t,"transports",{enumerable:!0,get:function(){return o.transports}});var i=s(622);Object.defineProperty(t,"installTimerFunctions",{enumerable:!0,get:function(){return i.installTimerFunctions}});var a=s(222);Object.defineProperty(t,"parse",{enumerable:!0,get:function(){return a.parse}})},481:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.Socket=void 0;const r=s(385),o=s(622),i=s(754),a=s(222),c=n(s(802)),h=s(260),u=s(373),l=(0,c.default)("engine.io-client:socket");class p extends h.Emitter{constructor(e,t={}){super(),e&&"object"==typeof e&&(t=e,e=null),e?(e=(0,a.parse)(e),t.hostname=e.host,t.secure="https"===e.protocol||"wss"===e.protocol,t.port=e.port,e.query&&(t.query=e.query)):t.host&&(t.hostname=(0,a.parse)(t.host).host),(0,o.installTimerFunctions)(this,t),this.secure=null!=t.secure?t.secure:"undefined"!=typeof location&&"https:"===location.protocol,t.hostname&&!t.port&&(t.port=this.secure?"443":"80"),this.hostname=t.hostname||("undefined"!=typeof location?location.hostname:"localhost"),this.port=t.port||("undefined"!=typeof location&&location.port?location.port:this.secure?"443":"80"),this.transports=t.transports||["polling","websocket"],this.readyState="",this.writeBuffer=[],this.prevBufferLen=0,this.opts=Object.assign({path:"/engine.io",agent:!1,withCredentials:!1,upgrade:!0,timestampParam:"t",rememberUpgrade:!1,rejectUnauthorized:!0,perMessageDeflate:{threshold:1024},transportOptions:{},closeOnBeforeunload:!0},t),this.opts.path=this.opts.path.replace(/\/$/,"")+"/","string"==typeof this.opts.query&&(this.opts.query=(0,i.decode)(this.opts.query)),this.id=null,this.upgrades=null,this.pingInterval=null,this.pingTimeout=null,this.pingTimeoutTimer=null,"function"==typeof addEventListener&&(this.opts.closeOnBeforeunload&&addEventListener("beforeunload",(()=>{this.transport&&(this.transport.removeAllListeners(),this.transport.close())}),!1),"localhost"!==this.hostname&&(this.offlineEventListener=()=>{this.onClose("transport close",{description:"network connection lost"})},addEventListener("offline",this.offlineEventListener,!1))),this.open()}createTransport(e){l('creating transport "%s"',e);const t=Object.assign({},this.opts.query);t.EIO=u.protocol,t.transport=e,this.id&&(t.sid=this.id);const s=Object.assign({},this.opts.transportOptions[e],this.opts,{query:t,socket:this,hostname:this.hostname,secure:this.secure,port:this.port});return l("options: %j",s),new r.transports[e](s)}open(){let e;if(this.opts.rememberUpgrade&&p.priorWebsocketSuccess&&-1!==this.transports.indexOf("websocket"))e="websocket";else{if(0===this.transports.length)return void this.setTimeoutFn((()=>{this.emitReserved("error","No transports available")}),0);e=this.transports[0]}this.readyState="opening";try{e=this.createTransport(e)}catch(e){return l("error while creating transport: %s",e),this.transports.shift(),void this.open()}e.open(),this.setTransport(e)}setTransport(e){l("setting transport %s",e.name),this.transport&&(l("clearing existing transport %s",this.transport.name),this.transport.removeAllListeners()),this.transport=e,e.on("drain",this.onDrain.bind(this)).on("packet",this.onPacket.bind(this)).on("error",this.onError.bind(this)).on("close",(e=>this.onClose("transport close",e)))}probe(e){l('probing transport "%s"',e);let t=this.createTransport(e),s=!1;p.priorWebsocketSuccess=!1;const n=()=>{s||(l('probe transport "%s" opened',e),t.send([{type:"ping",data:"probe"}]),t.once("packet",(n=>{if(!s)if("pong"===n.type&&"probe"===n.data){if(l('probe transport "%s" pong',e),this.upgrading=!0,this.emitReserved("upgrading",t),!t)return;p.priorWebsocketSuccess="websocket"===t.name,l('pausing current transport "%s"',this.transport.name),this.transport.pause((()=>{s||"closed"!==this.readyState&&(l("changing transport and sending upgrade packet"),h(),this.setTransport(t),t.send([{type:"upgrade"}]),this.emitReserved("upgrade",t),t=null,this.upgrading=!1,this.flush())}))}else{l('probe transport "%s" failed',e);const s=new Error("probe error");s.transport=t.name,this.emitReserved("upgradeError",s)}})))};function r(){s||(s=!0,h(),t.close(),t=null)}const o=s=>{const n=new Error("probe error: "+s);n.transport=t.name,r(),l('probe transport "%s" failed because of error: %s',e,s),this.emitReserved("upgradeError",n)};function i(){o("transport closed")}function a(){o("socket closed")}function c(e){t&&e.name!==t.name&&(l('"%s" works - aborting "%s"',e.name,t.name),r())}const h=()=>{t.removeListener("open",n),t.removeListener("error",o),t.removeListener("close",i),this.off("close",a),this.off("upgrading",c)};t.once("open",n),t.once("error",o),t.once("close",i),this.once("close",a),this.once("upgrading",c),t.open()}onOpen(){if(l("socket open"),this.readyState="open",p.priorWebsocketSuccess="websocket"===this.transport.name,this.emitReserved("open"),this.flush(),"open"===this.readyState&&this.opts.upgrade&&this.transport.pause){l("starting upgrade probes");let e=0;const t=this.upgrades.length;for(;e<t;e++)this.probe(this.upgrades[e])}}onPacket(e){if("opening"===this.readyState||"open"===this.readyState||"closing"===this.readyState)switch(l('socket receive: type "%s", data "%s"',e.type,e.data),this.emitReserved("packet",e),this.emitReserved("heartbeat"),e.type){case"open":this.onHandshake(JSON.parse(e.data));break;case"ping":this.resetPingTimeout(),this.sendPacket("pong"),this.emitReserved("ping"),this.emitReserved("pong");break;case"error":const t=new Error("server error");t.code=e.data,this.onError(t);break;case"message":this.emitReserved("data",e.data),this.emitReserved("message",e.data)}else l('packet received with socket readyState "%s"',this.readyState)}onHandshake(e){this.emitReserved("handshake",e),this.id=e.sid,this.transport.query.sid=e.sid,this.upgrades=this.filterUpgrades(e.upgrades),this.pingInterval=e.pingInterval,this.pingTimeout=e.pingTimeout,this.maxPayload=e.maxPayload,this.onOpen(),"closed"!==this.readyState&&this.resetPingTimeout()}resetPingTimeout(){this.clearTimeoutFn(this.pingTimeoutTimer),this.pingTimeoutTimer=this.setTimeoutFn((()=>{this.onClose("ping timeout")}),this.pingInterval+this.pingTimeout),this.opts.autoUnref&&this.pingTimeoutTimer.unref()}onDrain(){this.writeBuffer.splice(0,this.prevBufferLen),this.prevBufferLen=0,0===this.writeBuffer.length?this.emitReserved("drain"):this.flush()}flush(){if("closed"!==this.readyState&&this.transport.writable&&!this.upgrading&&this.writeBuffer.length){const e=this.getWritablePackets();l("flushing %d packets in socket",e.length),this.transport.send(e),this.prevBufferLen=e.length,this.emitReserved("flush")}}getWritablePackets(){if(!(this.maxPayload&&"polling"===this.transport.name&&this.writeBuffer.length>1))return this.writeBuffer;let e=1;for(let t=0;t<this.writeBuffer.length;t++){const s=this.writeBuffer[t].data;if(s&&(e+=(0,o.byteLength)(s)),t>0&&e>this.maxPayload)return l("only send %d out of %d packets",t,this.writeBuffer.length),this.writeBuffer.slice(0,t);e+=2}return l("payload size is %d (max: %d)",e,this.maxPayload),this.writeBuffer}write(e,t,s){return this.sendPacket("message",e,t,s),this}send(e,t,s){return this.sendPacket("message",e,t,s),this}sendPacket(e,t,s,n){if("function"==typeof t&&(n=t,t=void 0),"function"==typeof s&&(n=s,s=null),"closing"===this.readyState||"closed"===this.readyState)return;(s=s||{}).compress=!1!==s.compress;const r={type:e,data:t,options:s};this.emitReserved("packetCreate",r),this.writeBuffer.push(r),n&&this.once("flush",n),this.flush()}close(){const e=()=>{this.onClose("forced close"),l("socket closing - telling transport to close"),this.transport.close()},t=()=>{this.off("upgrade",t),this.off("upgradeError",t),e()},s=()=>{this.once("upgrade",t),this.once("upgradeError",t)};return"opening"!==this.readyState&&"open"!==this.readyState||(this.readyState="closing",this.writeBuffer.length?this.once("drain",(()=>{this.upgrading?s():e()})):this.upgrading?s():e()),this}onError(e){l("socket error %j",e),p.priorWebsocketSuccess=!1,this.emitReserved("error",e),this.onClose("transport error",e)}onClose(e,t){"opening"!==this.readyState&&"open"!==this.readyState&&"closing"!==this.readyState||(l('socket close with reason: "%s"',e),this.clearTimeoutFn(this.pingTimeoutTimer),this.transport.removeAllListeners("close"),this.transport.close(),this.transport.removeAllListeners(),"function"==typeof removeEventListener&&removeEventListener("offline",this.offlineEventListener,!1),this.readyState="closed",this.id=null,this.emitReserved("close",e,t),this.writeBuffer=[],this.prevBufferLen=0)}filterUpgrades(e){const t=[];let s=0;const n=e.length;for(;s<n;s++)~this.transports.indexOf(e[s])&&t.push(e[s]);return t}}t.Socket=p,p.protocol=u.protocol},870:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.Transport=void 0;const r=s(373),o=s(260),i=s(622),a=(0,n(s(802)).default)("engine.io-client:transport");class c extends Error{constructor(e,t,s){super(e),this.description=t,this.context=s,this.type="TransportError"}}class h extends o.Emitter{constructor(e){super(),this.writable=!1,(0,i.installTimerFunctions)(this,e),this.opts=e,this.query=e.query,this.readyState="",this.socket=e.socket}onError(e,t,s){return super.emitReserved("error",new c(e,t,s)),this}open(){return"closed"!==this.readyState&&""!==this.readyState||(this.readyState="opening",this.doOpen()),this}close(){return"opening"!==this.readyState&&"open"!==this.readyState||(this.doClose(),this.onClose()),this}send(e){"open"===this.readyState?this.write(e):a("transport is not open, discarding packets")}onOpen(){this.readyState="open",this.writable=!0,super.emitReserved("open")}onData(e){const t=(0,r.decodePacket)(e,this.socket.binaryType);this.onPacket(t)}onPacket(e){super.emitReserved("packet",e)}onClose(e){this.readyState="closed",super.emitReserved("close",e)}}t.Transport=h},385:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.transports=void 0;const n=s(484),r=s(308);t.transports={websocket:r.WS,polling:n.Polling}},484:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.Request=t.Polling=void 0;const r=s(870),o=n(s(802)),i=s(726),a=s(754),c=s(373),h=s(666),u=s(260),l=s(622),p=s(242),d=(0,o.default)("engine.io-client:polling");function f(){}const g=null!=new h.XHR({xdomain:!1}).responseType;class y extends r.Transport{constructor(e){if(super(e),this.polling=!1,"undefined"!=typeof location){const t="https:"===location.protocol;let s=location.port;s||(s=t?"443":"80"),this.xd="undefined"!=typeof location&&e.hostname!==location.hostname||s!==e.port,this.xs=e.secure!==t}const t=e&&e.forceBase64;this.supportsBinary=g&&!t}get name(){return"polling"}doOpen(){this.poll()}pause(e){this.readyState="pausing";const t=()=>{d("paused"),this.readyState="paused",e()};if(this.polling||!this.writable){let e=0;this.polling&&(d("we are currently polling - waiting to pause"),e++,this.once("pollComplete",(function(){d("pre-pause polling complete"),--e||t()}))),this.writable||(d("we are currently writing - waiting to pause"),e++,this.once("drain",(function(){d("pre-pause writing complete"),--e||t()})))}else t()}poll(){d("polling"),this.polling=!0,this.doPoll(),this.emitReserved("poll")}onData(e){d("polling got data %s",e),(0,c.decodePayload)(e,this.socket.binaryType).forEach((e=>{if("opening"===this.readyState&&"open"===e.type&&this.onOpen(),"close"===e.type)return this.onClose({description:"transport closed by the server"}),!1;this.onPacket(e)})),"closed"!==this.readyState&&(this.polling=!1,this.emitReserved("pollComplete"),"open"===this.readyState?this.poll():d('ignoring poll - transport state "%s"',this.readyState))}doClose(){const e=()=>{d("writing close packet"),this.write([{type:"close"}])};"open"===this.readyState?(d("transport open - closing"),e()):(d("transport not open - deferring close"),this.once("open",e))}write(e){this.writable=!1,(0,c.encodePayload)(e,(e=>{this.doWrite(e,(()=>{this.writable=!0,this.emitReserved("drain")}))}))}uri(){let e=this.query||{};const t=this.opts.secure?"https":"http";let s="";!1!==this.opts.timestampRequests&&(e[this.opts.timestampParam]=(0,i.yeast)()),this.supportsBinary||e.sid||(e.b64=1),this.opts.port&&("https"===t&&443!==Number(this.opts.port)||"http"===t&&80!==Number(this.opts.port))&&(s=":"+this.opts.port);const n=(0,a.encode)(e);return t+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+s+this.opts.path+(n.length?"?"+n:"")}request(e={}){return Object.assign(e,{xd:this.xd,xs:this.xs},this.opts),new m(this.uri(),e)}doWrite(e,t){const s=this.request({method:"POST",data:e});s.on("success",t),s.on("error",((e,t)=>{this.onError("xhr post error",e,t)}))}doPoll(){d("xhr poll");const e=this.request();e.on("data",this.onData.bind(this)),e.on("error",((e,t)=>{this.onError("xhr poll error",e,t)})),this.pollXhr=e}}t.Polling=y;class m extends u.Emitter{constructor(e,t){super(),(0,l.installTimerFunctions)(this,t),this.opts=t,this.method=t.method||"GET",this.uri=e,this.async=!1!==t.async,this.data=void 0!==t.data?t.data:null,this.create()}create(){const e=(0,l.pick)(this.opts,"agent","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized","autoUnref");e.xdomain=!!this.opts.xd,e.xscheme=!!this.opts.xs;const t=this.xhr=new h.XHR(e);try{d("xhr open %s: %s",this.method,this.uri),t.open(this.method,this.uri,this.async);try{if(this.opts.extraHeaders){t.setDisableHeaderCheck&&t.setDisableHeaderCheck(!0);for(let e in this.opts.extraHeaders)this.opts.extraHeaders.hasOwnProperty(e)&&t.setRequestHeader(e,this.opts.extraHeaders[e])}}catch(e){}if("POST"===this.method)try{t.setRequestHeader("Content-type","text/plain;charset=UTF-8")}catch(e){}try{t.setRequestHeader("Accept","*/*")}catch(e){}"withCredentials"in t&&(t.withCredentials=this.opts.withCredentials),this.opts.requestTimeout&&(t.timeout=this.opts.requestTimeout),t.onreadystatechange=()=>{4===t.readyState&&(200===t.status||1223===t.status?this.onLoad():this.setTimeoutFn((()=>{this.onError("number"==typeof t.status?t.status:0)}),0))},d("xhr data %s",this.data),t.send(this.data)}catch(e){return void this.setTimeoutFn((()=>{this.onError(e)}),0)}"undefined"!=typeof document&&(this.index=m.requestsCount++,m.requests[this.index]=this)}onError(e){this.emitReserved("error",e,this.xhr),this.cleanup(!0)}cleanup(e){if(void 0!==this.xhr&&null!==this.xhr){if(this.xhr.onreadystatechange=f,e)try{this.xhr.abort()}catch(e){}"undefined"!=typeof document&&delete m.requests[this.index],this.xhr=null}}onLoad(){const e=this.xhr.responseText;null!==e&&(this.emitReserved("data",e),this.emitReserved("success"),this.cleanup())}abort(){this.cleanup()}}if(t.Request=m,m.requestsCount=0,m.requests={},"undefined"!=typeof document)if("function"==typeof attachEvent)attachEvent("onunload",b);else if("function"==typeof addEventListener){const e="onpagehide"in p.globalThisShim?"pagehide":"unload";addEventListener(e,b,!1)}function b(){for(let e in m.requests)m.requests.hasOwnProperty(e)&&m.requests[e].abort()}},552:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.defaultBinaryType=t.usingBrowserWebSocket=t.WebSocket=t.nextTick=void 0;const n=s(242);t.nextTick="function"==typeof Promise&&"function"==typeof Promise.resolve?e=>Promise.resolve().then(e):(e,t)=>t(e,0),t.WebSocket=n.globalThisShim.WebSocket||n.globalThisShim.MozWebSocket,t.usingBrowserWebSocket=!0,t.defaultBinaryType="arraybuffer"},308:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.WS=void 0;const r=s(870),o=s(754),i=s(726),a=s(622),c=s(552),h=n(s(802)),u=s(373),l=(0,h.default)("engine.io-client:websocket"),p="undefined"!=typeof navigator&&"string"==typeof navigator.product&&"reactnative"===navigator.product.toLowerCase();class d extends r.Transport{constructor(e){super(e),this.supportsBinary=!e.forceBase64}get name(){return"websocket"}doOpen(){if(!this.check())return;const e=this.uri(),t=this.opts.protocols,s=p?{}:(0,a.pick)(this.opts,"agent","perMessageDeflate","pfx","key","passphrase","cert","ca","ciphers","rejectUnauthorized","localAddress","protocolVersion","origin","maxPayload","family","checkServerIdentity");this.opts.extraHeaders&&(s.headers=this.opts.extraHeaders);try{this.ws=c.usingBrowserWebSocket&&!p?t?new c.WebSocket(e,t):new c.WebSocket(e):new c.WebSocket(e,t,s)}catch(e){return this.emitReserved("error",e)}this.ws.binaryType=this.socket.binaryType||c.defaultBinaryType,this.addEventListeners()}addEventListeners(){this.ws.onopen=()=>{this.opts.autoUnref&&this.ws._socket.unref(),this.onOpen()},this.ws.onclose=e=>this.onClose({description:"websocket connection closed",context:e}),this.ws.onmessage=e=>this.onData(e.data),this.ws.onerror=e=>this.onError("websocket error",e)}write(e){this.writable=!1;for(let t=0;t<e.length;t++){const s=e[t],n=t===e.length-1;(0,u.encodePacket)(s,this.supportsBinary,(e=>{const t={};!c.usingBrowserWebSocket&&(s.options&&(t.compress=s.options.compress),this.opts.perMessageDeflate)&&("string"==typeof e?Buffer.byteLength(e):e.length)<this.opts.perMessageDeflate.threshold&&(t.compress=!1);try{c.usingBrowserWebSocket?this.ws.send(e):this.ws.send(e,t)}catch(e){l("websocket closed before onclose event")}n&&(0,c.nextTick)((()=>{this.writable=!0,this.emitReserved("drain")}),this.setTimeoutFn)}))}}doClose(){void 0!==this.ws&&(this.ws.close(),this.ws=null)}uri(){let e=this.query||{};const t=this.opts.secure?"wss":"ws";let s="";this.opts.port&&("wss"===t&&443!==Number(this.opts.port)||"ws"===t&&80!==Number(this.opts.port))&&(s=":"+this.opts.port),this.opts.timestampRequests&&(e[this.opts.timestampParam]=(0,i.yeast)()),this.supportsBinary||(e.b64=1);const n=(0,o.encode)(e);return t+"://"+(-1!==this.opts.hostname.indexOf(":")?"["+this.opts.hostname+"]":this.opts.hostname)+s+this.opts.path+(n.length?"?"+n:"")}check(){return!!c.WebSocket}}t.WS=d},666:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.XHR=void 0;const n=s(419),r=s(242);t.XHR=function(e){const t=e.xdomain;try{if("undefined"!=typeof XMLHttpRequest&&(!t||n.hasCORS))return new XMLHttpRequest}catch(e){}if(!t)try{return new(r.globalThisShim[["Active"].concat("Object").join("X")])("Microsoft.XMLHTTP")}catch(e){}}},622:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.byteLength=t.installTimerFunctions=t.pick=void 0;const n=s(242);t.pick=function(e,...t){return t.reduce(((t,s)=>(e.hasOwnProperty(s)&&(t[s]=e[s]),t)),{})};const r=setTimeout,o=clearTimeout;t.installTimerFunctions=function(e,t){t.useNativeTimers?(e.setTimeoutFn=r.bind(n.globalThisShim),e.clearTimeoutFn=o.bind(n.globalThisShim)):(e.setTimeoutFn=setTimeout.bind(n.globalThisShim),e.clearTimeoutFn=clearTimeout.bind(n.globalThisShim))},t.byteLength=function(e){return"string"==typeof e?function(e){let t=0,s=0;for(let n=0,r=e.length;n<r;n++)t=e.charCodeAt(n),t<128?s+=1:t<2048?s+=2:t<55296||t>=57344?s+=3:(n++,s+=4);return s}(e):Math.ceil(1.33*(e.byteLength||e.size))}},87:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.ERROR_PACKET=t.PACKET_TYPES_REVERSE=t.PACKET_TYPES=void 0;const s=Object.create(null);t.PACKET_TYPES=s,s.open="0",s.close="1",s.ping="2",s.pong="3",s.message="4",s.upgrade="5",s.noop="6";const n=Object.create(null);t.PACKET_TYPES_REVERSE=n,Object.keys(s).forEach((e=>{n[s[e]]=e})),t.ERROR_PACKET={type:"error",data:"parser error"}},469:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.decode=t.encode=void 0;const s="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",n="undefined"==typeof Uint8Array?[]:new Uint8Array(256);for(let e=0;e<s.length;e++)n[s.charCodeAt(e)]=e;t.encode=e=>{let t,n=new Uint8Array(e),r=n.length,o="";for(t=0;t<r;t+=3)o+=s[n[t]>>2],o+=s[(3&n[t])<<4|n[t+1]>>4],o+=s[(15&n[t+1])<<2|n[t+2]>>6],o+=s[63&n[t+2]];return r%3==2?o=o.substring(0,o.length-1)+"=":r%3==1&&(o=o.substring(0,o.length-2)+"=="),o},t.decode=e=>{let t,s,r,o,i,a=.75*e.length,c=e.length,h=0;"="===e[e.length-1]&&(a--,"="===e[e.length-2]&&a--);const u=new ArrayBuffer(a),l=new Uint8Array(u);for(t=0;t<c;t+=4)s=n[e.charCodeAt(t)],r=n[e.charCodeAt(t+1)],o=n[e.charCodeAt(t+2)],i=n[e.charCodeAt(t+3)],l[h++]=s<<2|r>>4,l[h++]=(15&r)<<4|o>>2,l[h++]=(3&o)<<6|63&i;return u}},572:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0});const n=s(87),r=s(469),o="function"==typeof ArrayBuffer,i=(e,t)=>{if(o){const s=(0,r.decode)(e);return a(s,t)}return{base64:!0,data:e}},a=(e,t)=>"blob"===t&&e instanceof ArrayBuffer?new Blob([e]):e;t.default=(e,t)=>{if("string"!=typeof e)return{type:"message",data:a(e,t)};const s=e.charAt(0);return"b"===s?{type:"message",data:i(e.substring(1),t)}:n.PACKET_TYPES_REVERSE[s]?e.length>1?{type:n.PACKET_TYPES_REVERSE[s],data:e.substring(1)}:{type:n.PACKET_TYPES_REVERSE[s]}:n.ERROR_PACKET}},908:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0});const n=s(87),r="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===Object.prototype.toString.call(Blob),o="function"==typeof ArrayBuffer,i=(e,t)=>{const s=new FileReader;return s.onload=function(){const e=s.result.split(",")[1];t("b"+e)},s.readAsDataURL(e)};t.default=({type:e,data:t},s,a)=>{return r&&t instanceof Blob?s?a(t):i(t,a):o&&(t instanceof ArrayBuffer||(c=t,"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(c):c&&c.buffer instanceof ArrayBuffer))?s?a(t):i(new Blob([t]),a):a(n.PACKET_TYPES[e]+(t||""));var c}},373:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.decodePayload=t.decodePacket=t.encodePayload=t.encodePacket=t.protocol=void 0;const n=s(908);t.encodePacket=n.default;const r=s(572);t.decodePacket=r.default;const o=String.fromCharCode(30);t.encodePayload=(e,t)=>{const s=e.length,r=new Array(s);let i=0;e.forEach(((e,a)=>{(0,n.default)(e,!1,(e=>{r[a]=e,++i===s&&t(r.join(o))}))}))},t.decodePayload=(e,t)=>{const s=e.split(o),n=[];for(let e=0;e<s.length;e++){const o=(0,r.default)(s[e],t);if(n.push(o),"error"===o.type)break}return n},t.protocol=4},159:(e,t)=>{"use strict";function s(e){e=e||{},this.ms=e.min||100,this.max=e.max||1e4,this.factor=e.factor||2,this.jitter=e.jitter>0&&e.jitter<=1?e.jitter:0,this.attempts=0}Object.defineProperty(t,"__esModule",{value:!0}),t.Backoff=void 0,t.Backoff=s,s.prototype.duration=function(){var e=this.ms*Math.pow(this.factor,this.attempts++);if(this.jitter){var t=Math.random(),s=Math.floor(t*this.jitter*e);e=0==(1&Math.floor(10*t))?e-s:e+s}return 0|Math.min(e,this.max)},s.prototype.reset=function(){this.attempts=0},s.prototype.setMin=function(e){this.ms=e},s.prototype.setMax=function(e){this.max=e},s.prototype.setJitter=function(e){this.jitter=e}},46:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.default=t.connect=t.io=t.Socket=t.Manager=t.protocol=void 0;const r=s(84),o=s(168);Object.defineProperty(t,"Manager",{enumerable:!0,get:function(){return o.Manager}});const i=s(312);Object.defineProperty(t,"Socket",{enumerable:!0,get:function(){return i.Socket}});const a=n(s(669)).default("socket.io-client"),c={};function h(e,t){"object"==typeof e&&(t=e,e=void 0),t=t||{};const s=r.url(e,t.path||"/socket.io"),n=s.source,i=s.id,h=s.path,u=c[i]&&h in c[i].nsps;let l;return t.forceNew||t["force new connection"]||!1===t.multiplex||u?(a("ignoring socket cache for %s",n),l=new o.Manager(n,t)):(c[i]||(a("new io instance for %s",n),c[i]=new o.Manager(n,t)),l=c[i]),s.query&&!t.query&&(t.query=s.queryKey),l.socket(s.path,t)}t.io=h,t.connect=h,t.default=h,Object.assign(h,{Manager:o.Manager,Socket:i.Socket,io:h,connect:h});var u=s(116);Object.defineProperty(t,"protocol",{enumerable:!0,get:function(){return u.protocol}}),e.exports=h},168:function(e,t,s){"use strict";var n=this&&this.__createBinding||(Object.create?function(e,t,s,n){void 0===n&&(n=s),Object.defineProperty(e,n,{enumerable:!0,get:function(){return t[s]}})}:function(e,t,s,n){void 0===n&&(n=s),e[n]=t[s]}),r=this&&this.__setModuleDefault||(Object.create?function(e,t){Object.defineProperty(e,"default",{enumerable:!0,value:t})}:function(e,t){e.default=t}),o=this&&this.__importStar||function(e){if(e&&e.__esModule)return e;var t={};if(null!=e)for(var s in e)"default"!==s&&Object.prototype.hasOwnProperty.call(e,s)&&n(t,e,s);return r(t,e),t},i=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.Manager=void 0;const a=s(679),c=s(312),h=o(s(116)),u=s(149),l=s(159),p=s(260),d=i(s(669)).default("socket.io-client:manager");class f extends p.Emitter{constructor(e,t){var s;super(),this.nsps={},this.subs=[],e&&"object"==typeof e&&(t=e,e=void 0),(t=t||{}).path=t.path||"/socket.io",this.opts=t,a.installTimerFunctions(this,t),this.reconnection(!1!==t.reconnection),this.reconnectionAttempts(t.reconnectionAttempts||1/0),this.reconnectionDelay(t.reconnectionDelay||1e3),this.reconnectionDelayMax(t.reconnectionDelayMax||5e3),this.randomizationFactor(null!==(s=t.randomizationFactor)&&void 0!==s?s:.5),this.backoff=new l.Backoff({min:this.reconnectionDelay(),max:this.reconnectionDelayMax(),jitter:this.randomizationFactor()}),this.timeout(null==t.timeout?2e4:t.timeout),this._readyState="closed",this.uri=e;const n=t.parser||h;this.encoder=new n.Encoder,this.decoder=new n.Decoder,this._autoConnect=!1!==t.autoConnect,this._autoConnect&&this.open()}reconnection(e){return arguments.length?(this._reconnection=!!e,this):this._reconnection}reconnectionAttempts(e){return void 0===e?this._reconnectionAttempts:(this._reconnectionAttempts=e,this)}reconnectionDelay(e){var t;return void 0===e?this._reconnectionDelay:(this._reconnectionDelay=e,null===(t=this.backoff)||void 0===t||t.setMin(e),this)}randomizationFactor(e){var t;return void 0===e?this._randomizationFactor:(this._randomizationFactor=e,null===(t=this.backoff)||void 0===t||t.setJitter(e),this)}reconnectionDelayMax(e){var t;return void 0===e?this._reconnectionDelayMax:(this._reconnectionDelayMax=e,null===(t=this.backoff)||void 0===t||t.setMax(e),this)}timeout(e){return arguments.length?(this._timeout=e,this):this._timeout}maybeReconnectOnOpen(){!this._reconnecting&&this._reconnection&&0===this.backoff.attempts&&this.reconnect()}open(e){if(d("readyState %s",this._readyState),~this._readyState.indexOf("open"))return this;d("opening %s",this.uri),this.engine=new a.Socket(this.uri,this.opts);const t=this.engine,s=this;this._readyState="opening",this.skipReconnect=!1;const n=u.on(t,"open",(function(){s.onopen(),e&&e()})),r=u.on(t,"error",(t=>{d("error"),s.cleanup(),s._readyState="closed",this.emitReserved("error",t),e?e(t):s.maybeReconnectOnOpen()}));if(!1!==this._timeout){const e=this._timeout;d("connect attempt will timeout after %d",e),0===e&&n();const s=this.setTimeoutFn((()=>{d("connect attempt timed out after %d",e),n(),t.close(),t.emit("error",new Error("timeout"))}),e);this.opts.autoUnref&&s.unref(),this.subs.push((function(){clearTimeout(s)}))}return this.subs.push(n),this.subs.push(r),this}connect(e){return this.open(e)}onopen(){d("open"),this.cleanup(),this._readyState="open",this.emitReserved("open");const e=this.engine;this.subs.push(u.on(e,"ping",this.onping.bind(this)),u.on(e,"data",this.ondata.bind(this)),u.on(e,"error",this.onerror.bind(this)),u.on(e,"close",this.onclose.bind(this)),u.on(this.decoder,"decoded",this.ondecoded.bind(this)))}onping(){this.emitReserved("ping")}ondata(e){this.decoder.add(e)}ondecoded(e){this.emitReserved("packet",e)}onerror(e){d("error",e),this.emitReserved("error",e)}socket(e,t){let s=this.nsps[e];return s||(s=new c.Socket(this,e,t),this.nsps[e]=s),s}_destroy(e){const t=Object.keys(this.nsps);for(const e of t)if(this.nsps[e].active)return void d("socket %s is still active, skipping close",e);this._close()}_packet(e){d("writing packet %j",e);const t=this.encoder.encode(e);for(let s=0;s<t.length;s++)this.engine.write(t[s],e.options)}cleanup(){d("cleanup"),this.subs.forEach((e=>e())),this.subs.length=0,this.decoder.destroy()}_close(){d("disconnect"),this.skipReconnect=!0,this._reconnecting=!1,this.onclose("forced close"),this.engine&&this.engine.close()}disconnect(){return this._close()}onclose(e,t){d("closed due to %s",e),this.cleanup(),this.backoff.reset(),this._readyState="closed",this.emitReserved("close",e,t),this._reconnection&&!this.skipReconnect&&this.reconnect()}reconnect(){if(this._reconnecting||this.skipReconnect)return this;const e=this;if(this.backoff.attempts>=this._reconnectionAttempts)d("reconnect failed"),this.backoff.reset(),this.emitReserved("reconnect_failed"),this._reconnecting=!1;else{const t=this.backoff.duration();d("will wait %dms before reconnect attempt",t),this._reconnecting=!0;const s=this.setTimeoutFn((()=>{e.skipReconnect||(d("attempting reconnect"),this.emitReserved("reconnect_attempt",e.backoff.attempts),e.skipReconnect||e.open((t=>{t?(d("reconnect attempt error"),e._reconnecting=!1,e.reconnect(),this.emitReserved("reconnect_error",t)):(d("reconnect success"),e.onreconnect())})))}),t);this.opts.autoUnref&&s.unref(),this.subs.push((function(){clearTimeout(s)}))}}onreconnect(){const e=this.backoff.attempts;this._reconnecting=!1,this.backoff.reset(),this.emitReserved("reconnect",e)}}t.Manager=f},149:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.on=void 0,t.on=function(e,t,s){return e.on(t,s),function(){e.off(t,s)}}},312:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.Socket=void 0;const r=s(116),o=s(149),i=s(260),a=n(s(669)).default("socket.io-client:socket"),c=Object.freeze({connect:1,connect_error:1,disconnect:1,disconnecting:1,newListener:1,removeListener:1});class h extends i.Emitter{constructor(e,t,s){super(),this.connected=!1,this.receiveBuffer=[],this.sendBuffer=[],this.ids=0,this.acks={},this.flags={},this.io=e,this.nsp=t,s&&s.auth&&(this.auth=s.auth),this.io._autoConnect&&this.open()}get disconnected(){return!this.connected}subEvents(){if(this.subs)return;const e=this.io;this.subs=[o.on(e,"open",this.onopen.bind(this)),o.on(e,"packet",this.onpacket.bind(this)),o.on(e,"error",this.onerror.bind(this)),o.on(e,"close",this.onclose.bind(this))]}get active(){return!!this.subs}connect(){return this.connected||(this.subEvents(),this.io._reconnecting||this.io.open(),"open"===this.io._readyState&&this.onopen()),this}open(){return this.connect()}send(...e){return e.unshift("message"),this.emit.apply(this,e),this}emit(e,...t){if(c.hasOwnProperty(e))throw new Error('"'+e+'" is a reserved event name');t.unshift(e);const s={type:r.PacketType.EVENT,data:t,options:{}};if(s.options.compress=!1!==this.flags.compress,"function"==typeof t[t.length-1]){const e=this.ids++;a("emitting packet with ack id %d",e);const n=t.pop();this._registerAckCallback(e,n),s.id=e}const n=this.io.engine&&this.io.engine.transport&&this.io.engine.transport.writable;return!this.flags.volatile||n&&this.connected?this.connected?(this.notifyOutgoingListeners(s),this.packet(s)):this.sendBuffer.push(s):a("discard packet as the transport is not currently writable"),this.flags={},this}_registerAckCallback(e,t){const s=this.flags.timeout;if(void 0===s)return void(this.acks[e]=t);const n=this.io.setTimeoutFn((()=>{delete this.acks[e];for(let t=0;t<this.sendBuffer.length;t++)this.sendBuffer[t].id===e&&(a("removing packet with ack id %d from the buffer",e),this.sendBuffer.splice(t,1));a("event with ack id %d has timed out after %d ms",e,s),t.call(this,new Error("operation has timed out"))}),s);this.acks[e]=(...e)=>{this.io.clearTimeoutFn(n),t.apply(this,[null,...e])}}packet(e){e.nsp=this.nsp,this.io._packet(e)}onopen(){a("transport is open - connecting"),"function"==typeof this.auth?this.auth((e=>{this.packet({type:r.PacketType.CONNECT,data:e})})):this.packet({type:r.PacketType.CONNECT,data:this.auth})}onerror(e){this.connected||this.emitReserved("connect_error",e)}onclose(e,t){a("close (%s)",e),this.connected=!1,delete this.id,this.emitReserved("disconnect",e,t)}onpacket(e){if(e.nsp===this.nsp)switch(e.type){case r.PacketType.CONNECT:if(e.data&&e.data.sid){const t=e.data.sid;this.onconnect(t)}else this.emitReserved("connect_error",new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));break;case r.PacketType.EVENT:case r.PacketType.BINARY_EVENT:this.onevent(e);break;case r.PacketType.ACK:case r.PacketType.BINARY_ACK:this.onack(e);break;case r.PacketType.DISCONNECT:this.ondisconnect();break;case r.PacketType.CONNECT_ERROR:this.destroy();const t=new Error(e.data.message);t.data=e.data.data,this.emitReserved("connect_error",t)}}onevent(e){const t=e.data||[];a("emitting event %j",t),null!=e.id&&(a("attaching ack callback to event"),t.push(this.ack(e.id))),this.connected?this.emitEvent(t):this.receiveBuffer.push(Object.freeze(t))}emitEvent(e){if(this._anyListeners&&this._anyListeners.length){const t=this._anyListeners.slice();for(const s of t)s.apply(this,e)}super.emit.apply(this,e)}ack(e){const t=this;let s=!1;return function(...n){s||(s=!0,a("sending ack %j",n),t.packet({type:r.PacketType.ACK,id:e,data:n}))}}onack(e){const t=this.acks[e.id];"function"==typeof t?(a("calling ack %s with %j",e.id,e.data),t.apply(this,e.data),delete this.acks[e.id]):a("bad ack %s",e.id)}onconnect(e){a("socket connected with id %s",e),this.id=e,this.connected=!0,this.emitBuffered(),this.emitReserved("connect")}emitBuffered(){this.receiveBuffer.forEach((e=>this.emitEvent(e))),this.receiveBuffer=[],this.sendBuffer.forEach((e=>{this.notifyOutgoingListeners(e),this.packet(e)})),this.sendBuffer=[]}ondisconnect(){a("server disconnect (%s)",this.nsp),this.destroy(),this.onclose("io server disconnect")}destroy(){this.subs&&(this.subs.forEach((e=>e())),this.subs=void 0),this.io._destroy(this)}disconnect(){return this.connected&&(a("performing disconnect (%s)",this.nsp),this.packet({type:r.PacketType.DISCONNECT})),this.destroy(),this.connected&&this.onclose("io client disconnect"),this}close(){return this.disconnect()}compress(e){return this.flags.compress=e,this}get volatile(){return this.flags.volatile=!0,this}timeout(e){return this.flags.timeout=e,this}onAny(e){return this._anyListeners=this._anyListeners||[],this._anyListeners.push(e),this}prependAny(e){return this._anyListeners=this._anyListeners||[],this._anyListeners.unshift(e),this}offAny(e){if(!this._anyListeners)return this;if(e){const t=this._anyListeners;for(let s=0;s<t.length;s++)if(e===t[s])return t.splice(s,1),this}else this._anyListeners=[];return this}listenersAny(){return this._anyListeners||[]}onAnyOutgoing(e){return this._anyOutgoingListeners=this._anyOutgoingListeners||[],this._anyOutgoingListeners.push(e),this}prependAnyOutgoing(e){return this._anyOutgoingListeners=this._anyOutgoingListeners||[],this._anyOutgoingListeners.unshift(e),this}offAnyOutgoing(e){if(!this._anyOutgoingListeners)return this;if(e){const t=this._anyOutgoingListeners;for(let s=0;s<t.length;s++)if(e===t[s])return t.splice(s,1),this}else this._anyOutgoingListeners=[];return this}listenersAnyOutgoing(){return this._anyOutgoingListeners||[]}notifyOutgoingListeners(e){if(this._anyOutgoingListeners&&this._anyOutgoingListeners.length){const t=this._anyOutgoingListeners.slice();for(const s of t)s.apply(this,e.data)}}}t.Socket=h},84:function(e,t,s){"use strict";var n=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.url=void 0;const r=s(679),o=n(s(669)).default("socket.io-client:url");t.url=function(e,t="",s){let n=e;s=s||"undefined"!=typeof location&&location,null==e&&(e=s.protocol+"//"+s.host),"string"==typeof e&&("/"===e.charAt(0)&&(e="/"===e.charAt(1)?s.protocol+e:s.host+e),/^(https?|wss?):\/\//.test(e)||(o("protocol-less url %s",e),e=void 0!==s?s.protocol+"//"+e:"https://"+e),o("parse %s",e),n=r.parse(e)),n.port||(/^(http|ws)$/.test(n.protocol)?n.port="80":/^(http|ws)s$/.test(n.protocol)&&(n.port="443")),n.path=n.path||"/";const i=-1!==n.host.indexOf(":")?"["+n.host+"]":n.host;return n.id=n.protocol+"://"+i+":"+n.port+t,n.href=n.protocol+"://"+i+(s&&s.port===n.port?"":":"+n.port),n}},155:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.reconstructPacket=t.deconstructPacket=void 0;const n=s(790);function r(e,t){if(!e)return e;if(n.isBinary(e)){const s={_placeholder:!0,num:t.length};return t.push(e),s}if(Array.isArray(e)){const s=new Array(e.length);for(let n=0;n<e.length;n++)s[n]=r(e[n],t);return s}if("object"==typeof e&&!(e instanceof Date)){const s={};for(const n in e)Object.prototype.hasOwnProperty.call(e,n)&&(s[n]=r(e[n],t));return s}return e}function o(e,t){if(!e)return e;if(e&&!0===e._placeholder){if("number"==typeof e.num&&e.num>=0&&e.num<t.length)return t[e.num];throw new Error("illegal attachments")}if(Array.isArray(e))for(let s=0;s<e.length;s++)e[s]=o(e[s],t);else if("object"==typeof e)for(const s in e)Object.prototype.hasOwnProperty.call(e,s)&&(e[s]=o(e[s],t));return e}t.deconstructPacket=function(e){const t=[],s=e.data,n=e;return n.data=r(s,t),n.attachments=t.length,{packet:n,buffers:t}},t.reconstructPacket=function(e,t){return e.data=o(e.data,t),e.attachments=void 0,e}},116:(e,t,s)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Decoder=t.Encoder=t.PacketType=t.protocol=void 0;const n=s(260),r=s(155),o=s(790),i=s(669).default("socket.io-parser");var a;t.protocol=5,function(e){e[e.CONNECT=0]="CONNECT",e[e.DISCONNECT=1]="DISCONNECT",e[e.EVENT=2]="EVENT",e[e.ACK=3]="ACK",e[e.CONNECT_ERROR=4]="CONNECT_ERROR",e[e.BINARY_EVENT=5]="BINARY_EVENT",e[e.BINARY_ACK=6]="BINARY_ACK"}(a=t.PacketType||(t.PacketType={})),t.Encoder=class{constructor(e){this.replacer=e}encode(e){return i("encoding packet %j",e),e.type!==a.EVENT&&e.type!==a.ACK||!o.hasBinary(e)?[this.encodeAsString(e)]:(e.type=e.type===a.EVENT?a.BINARY_EVENT:a.BINARY_ACK,this.encodeAsBinary(e))}encodeAsString(e){let t=""+e.type;return e.type!==a.BINARY_EVENT&&e.type!==a.BINARY_ACK||(t+=e.attachments+"-"),e.nsp&&"/"!==e.nsp&&(t+=e.nsp+","),null!=e.id&&(t+=e.id),null!=e.data&&(t+=JSON.stringify(e.data,this.replacer)),i("encoded %j as %s",e,t),t}encodeAsBinary(e){const t=r.deconstructPacket(e),s=this.encodeAsString(t.packet),n=t.buffers;return n.unshift(s),n}};class c extends n.Emitter{constructor(e){super(),this.reviver=e}add(e){let t;if("string"==typeof e){if(this.reconstructor)throw new Error("got plaintext data when reconstructing a packet");t=this.decodeString(e),t.type===a.BINARY_EVENT||t.type===a.BINARY_ACK?(this.reconstructor=new h(t),0===t.attachments&&super.emitReserved("decoded",t)):super.emitReserved("decoded",t)}else{if(!o.isBinary(e)&&!e.base64)throw new Error("Unknown type: "+e);if(!this.reconstructor)throw new Error("got binary data when not reconstructing a packet");t=this.reconstructor.takeBinaryData(e),t&&(this.reconstructor=null,super.emitReserved("decoded",t))}}decodeString(e){let t=0;const s={type:Number(e.charAt(0))};if(void 0===a[s.type])throw new Error("unknown packet type "+s.type);if(s.type===a.BINARY_EVENT||s.type===a.BINARY_ACK){const n=t+1;for(;"-"!==e.charAt(++t)&&t!=e.length;);const r=e.substring(n,t);if(r!=Number(r)||"-"!==e.charAt(t))throw new Error("Illegal attachments");s.attachments=Number(r)}if("/"===e.charAt(t+1)){const n=t+1;for(;++t&&","!==e.charAt(t)&&t!==e.length;);s.nsp=e.substring(n,t)}else s.nsp="/";const n=e.charAt(t+1);if(""!==n&&Number(n)==n){const n=t+1;for(;++t;){const s=e.charAt(t);if(null==s||Number(s)!=s){--t;break}if(t===e.length)break}s.id=Number(e.substring(n,t+1))}if(e.charAt(++t)){const n=this.tryParse(e.substr(t));if(!c.isPayloadValid(s.type,n))throw new Error("invalid payload");s.data=n}return i("decoded %s as %j",e,s),s}tryParse(e){try{return JSON.parse(e,this.reviver)}catch(e){return!1}}static isPayloadValid(e,t){switch(e){case a.CONNECT:return"object"==typeof t;case a.DISCONNECT:return void 0===t;case a.CONNECT_ERROR:return"string"==typeof t||"object"==typeof t;case a.EVENT:case a.BINARY_EVENT:return Array.isArray(t)&&t.length>0;case a.ACK:case a.BINARY_ACK:return Array.isArray(t)}}destroy(){this.reconstructor&&this.reconstructor.finishedReconstruction()}}t.Decoder=c;class h{constructor(e){this.packet=e,this.buffers=[],this.reconPack=e}takeBinaryData(e){if(this.buffers.push(e),this.buffers.length===this.reconPack.attachments){const e=r.reconstructPacket(this.reconPack,this.buffers);return this.finishedReconstruction(),e}return null}finishedReconstruction(){this.reconPack=null,this.buffers=[]}}},790:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.hasBinary=t.isBinary=void 0;const s="function"==typeof ArrayBuffer,n=Object.prototype.toString,r="function"==typeof Blob||"undefined"!=typeof Blob&&"[object BlobConstructor]"===n.call(Blob),o="function"==typeof File||"undefined"!=typeof File&&"[object FileConstructor]"===n.call(File);function i(e){return s&&(e instanceof ArrayBuffer||(e=>"function"==typeof ArrayBuffer.isView?ArrayBuffer.isView(e):e.buffer instanceof ArrayBuffer)(e))||r&&e instanceof Blob||o&&e instanceof File}t.isBinary=i,t.hasBinary=function e(t,s){if(!t||"object"!=typeof t)return!1;if(Array.isArray(t)){for(let s=0,n=t.length;s<n;s++)if(e(t[s]))return!0;return!1}if(i(t))return!0;if(t.toJSON&&"function"==typeof t.toJSON&&1===arguments.length)return e(t.toJSON(),!0);for(const s in t)if(Object.prototype.hasOwnProperty.call(t,s)&&e(t[s]))return!0;return!1}},260:(e,t,s)=>{"use strict";function n(e){if(e)return function(e){for(var t in n.prototype)e[t]=n.prototype[t];return e}(e)}s.r(t),s.d(t,{Emitter:()=>n}),n.prototype.on=n.prototype.addEventListener=function(e,t){return this._callbacks=this._callbacks||{},(this._callbacks["$"+e]=this._callbacks["$"+e]||[]).push(t),this},n.prototype.once=function(e,t){function s(){this.off(e,s),t.apply(this,arguments)}return s.fn=t,this.on(e,s),this},n.prototype.off=n.prototype.removeListener=n.prototype.removeAllListeners=n.prototype.removeEventListener=function(e,t){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var s,n=this._callbacks["$"+e];if(!n)return this;if(1==arguments.length)return delete this._callbacks["$"+e],this;for(var r=0;r<n.length;r++)if((s=n[r])===t||s.fn===t){n.splice(r,1);break}return 0===n.length&&delete this._callbacks["$"+e],this},n.prototype.emit=function(e){this._callbacks=this._callbacks||{};for(var t=new Array(arguments.length-1),s=this._callbacks["$"+e],n=1;n<arguments.length;n++)t[n-1]=arguments[n];if(s){n=0;for(var r=(s=s.slice(0)).length;n<r;++n)s[n].apply(this,t)}return this},n.prototype.emitReserved=n.prototype.emit,n.prototype.listeners=function(e){return this._callbacks=this._callbacks||{},this._callbacks["$"+e]||[]},n.prototype.hasListeners=function(e){return!!this.listeners(e).length}}},t={};function s(n){var r=t[n];if(void 0!==r)return r.exports;var o=t[n]={exports:{}};return e[n].call(o.exports,o,o.exports,s),o.exports}s.d=(e,t)=>{for(var n in t)s.o(t,n)&&!s.o(e,n)&&Object.defineProperty(e,n,{enumerable:!0,get:t[n]})},s.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),s.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},s(747)})();
-//# sourceMappingURL=script.js.map
+"use strict";
+(() => {
+  var __defProp = Object.defineProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+
+  // node_modules/engine.io-parser/build/esm/commons.js
+  var PACKET_TYPES = /* @__PURE__ */ Object.create(null);
+  PACKET_TYPES["open"] = "0";
+  PACKET_TYPES["close"] = "1";
+  PACKET_TYPES["ping"] = "2";
+  PACKET_TYPES["pong"] = "3";
+  PACKET_TYPES["message"] = "4";
+  PACKET_TYPES["upgrade"] = "5";
+  PACKET_TYPES["noop"] = "6";
+  var PACKET_TYPES_REVERSE = /* @__PURE__ */ Object.create(null);
+  Object.keys(PACKET_TYPES).forEach((key) => {
+    PACKET_TYPES_REVERSE[PACKET_TYPES[key]] = key;
+  });
+  var ERROR_PACKET = { type: "error", data: "parser error" };
+
+  // node_modules/engine.io-parser/build/esm/encodePacket.browser.js
+  var withNativeBlob = typeof Blob === "function" || typeof Blob !== "undefined" && Object.prototype.toString.call(Blob) === "[object BlobConstructor]";
+  var withNativeArrayBuffer = typeof ArrayBuffer === "function";
+  var isView = (obj) => {
+    return typeof ArrayBuffer.isView === "function" ? ArrayBuffer.isView(obj) : obj && obj.buffer instanceof ArrayBuffer;
+  };
+  var encodePacket = ({ type, data }, supportsBinary, callback) => {
+    if (withNativeBlob && data instanceof Blob) {
+      if (supportsBinary) {
+        return callback(data);
+      } else {
+        return encodeBlobAsBase64(data, callback);
+      }
+    } else if (withNativeArrayBuffer && (data instanceof ArrayBuffer || isView(data))) {
+      if (supportsBinary) {
+        return callback(data);
+      } else {
+        return encodeBlobAsBase64(new Blob([data]), callback);
+      }
+    }
+    return callback(PACKET_TYPES[type] + (data || ""));
+  };
+  var encodeBlobAsBase64 = (data, callback) => {
+    const fileReader = new FileReader();
+    fileReader.onload = function() {
+      const content = fileReader.result.split(",")[1];
+      callback("b" + content);
+    };
+    return fileReader.readAsDataURL(data);
+  };
+  var encodePacket_browser_default = encodePacket;
+
+  // node_modules/engine.io-parser/build/esm/contrib/base64-arraybuffer.js
+  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var lookup = typeof Uint8Array === "undefined" ? [] : new Uint8Array(256);
+  for (let i2 = 0; i2 < chars.length; i2++) {
+    lookup[chars.charCodeAt(i2)] = i2;
+  }
+  var decode = (base64) => {
+    let bufferLength = base64.length * 0.75, len = base64.length, i2, p = 0, encoded1, encoded2, encoded3, encoded4;
+    if (base64[base64.length - 1] === "=") {
+      bufferLength--;
+      if (base64[base64.length - 2] === "=") {
+        bufferLength--;
+      }
+    }
+    const arraybuffer = new ArrayBuffer(bufferLength), bytes = new Uint8Array(arraybuffer);
+    for (i2 = 0; i2 < len; i2 += 4) {
+      encoded1 = lookup[base64.charCodeAt(i2)];
+      encoded2 = lookup[base64.charCodeAt(i2 + 1)];
+      encoded3 = lookup[base64.charCodeAt(i2 + 2)];
+      encoded4 = lookup[base64.charCodeAt(i2 + 3)];
+      bytes[p++] = encoded1 << 2 | encoded2 >> 4;
+      bytes[p++] = (encoded2 & 15) << 4 | encoded3 >> 2;
+      bytes[p++] = (encoded3 & 3) << 6 | encoded4 & 63;
+    }
+    return arraybuffer;
+  };
+
+  // node_modules/engine.io-parser/build/esm/decodePacket.browser.js
+  var withNativeArrayBuffer2 = typeof ArrayBuffer === "function";
+  var decodePacket = (encodedPacket, binaryType) => {
+    if (typeof encodedPacket !== "string") {
+      return {
+        type: "message",
+        data: mapBinary(encodedPacket, binaryType)
+      };
+    }
+    const type = encodedPacket.charAt(0);
+    if (type === "b") {
+      return {
+        type: "message",
+        data: decodeBase64Packet(encodedPacket.substring(1), binaryType)
+      };
+    }
+    const packetType = PACKET_TYPES_REVERSE[type];
+    if (!packetType) {
+      return ERROR_PACKET;
+    }
+    return encodedPacket.length > 1 ? {
+      type: PACKET_TYPES_REVERSE[type],
+      data: encodedPacket.substring(1)
+    } : {
+      type: PACKET_TYPES_REVERSE[type]
+    };
+  };
+  var decodeBase64Packet = (data, binaryType) => {
+    if (withNativeArrayBuffer2) {
+      const decoded = decode(data);
+      return mapBinary(decoded, binaryType);
+    } else {
+      return { base64: true, data };
+    }
+  };
+  var mapBinary = (data, binaryType) => {
+    switch (binaryType) {
+      case "blob":
+        return data instanceof ArrayBuffer ? new Blob([data]) : data;
+      case "arraybuffer":
+      default:
+        return data;
+    }
+  };
+  var decodePacket_browser_default = decodePacket;
+
+  // node_modules/engine.io-parser/build/esm/index.js
+  var SEPARATOR = String.fromCharCode(30);
+  var encodePayload = (packets, callback) => {
+    const length2 = packets.length;
+    const encodedPackets = new Array(length2);
+    let count = 0;
+    packets.forEach((packet, i2) => {
+      encodePacket_browser_default(packet, false, (encodedPacket) => {
+        encodedPackets[i2] = encodedPacket;
+        if (++count === length2) {
+          callback(encodedPackets.join(SEPARATOR));
+        }
+      });
+    });
+  };
+  var decodePayload = (encodedPayload, binaryType) => {
+    const encodedPackets = encodedPayload.split(SEPARATOR);
+    const packets = [];
+    for (let i2 = 0; i2 < encodedPackets.length; i2++) {
+      const decodedPacket = decodePacket_browser_default(encodedPackets[i2], binaryType);
+      packets.push(decodedPacket);
+      if (decodedPacket.type === "error") {
+        break;
+      }
+    }
+    return packets;
+  };
+  var protocol = 4;
+
+  // node_modules/@socket.io/component-emitter/index.mjs
+  function Emitter(obj) {
+    if (obj)
+      return mixin(obj);
+  }
+  function mixin(obj) {
+    for (var key in Emitter.prototype) {
+      obj[key] = Emitter.prototype[key];
+    }
+    return obj;
+  }
+  Emitter.prototype.on = Emitter.prototype.addEventListener = function(event, fn) {
+    this._callbacks = this._callbacks || {};
+    (this._callbacks["$" + event] = this._callbacks["$" + event] || []).push(fn);
+    return this;
+  };
+  Emitter.prototype.once = function(event, fn) {
+    function on2() {
+      this.off(event, on2);
+      fn.apply(this, arguments);
+    }
+    on2.fn = fn;
+    this.on(event, on2);
+    return this;
+  };
+  Emitter.prototype.off = Emitter.prototype.removeListener = Emitter.prototype.removeAllListeners = Emitter.prototype.removeEventListener = function(event, fn) {
+    this._callbacks = this._callbacks || {};
+    if (0 == arguments.length) {
+      this._callbacks = {};
+      return this;
+    }
+    var callbacks = this._callbacks["$" + event];
+    if (!callbacks)
+      return this;
+    if (1 == arguments.length) {
+      delete this._callbacks["$" + event];
+      return this;
+    }
+    var cb;
+    for (var i2 = 0; i2 < callbacks.length; i2++) {
+      cb = callbacks[i2];
+      if (cb === fn || cb.fn === fn) {
+        callbacks.splice(i2, 1);
+        break;
+      }
+    }
+    if (callbacks.length === 0) {
+      delete this._callbacks["$" + event];
+    }
+    return this;
+  };
+  Emitter.prototype.emit = function(event) {
+    this._callbacks = this._callbacks || {};
+    var args = new Array(arguments.length - 1), callbacks = this._callbacks["$" + event];
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      args[i2 - 1] = arguments[i2];
+    }
+    if (callbacks) {
+      callbacks = callbacks.slice(0);
+      for (var i2 = 0, len = callbacks.length; i2 < len; ++i2) {
+        callbacks[i2].apply(this, args);
+      }
+    }
+    return this;
+  };
+  Emitter.prototype.emitReserved = Emitter.prototype.emit;
+  Emitter.prototype.listeners = function(event) {
+    this._callbacks = this._callbacks || {};
+    return this._callbacks["$" + event] || [];
+  };
+  Emitter.prototype.hasListeners = function(event) {
+    return !!this.listeners(event).length;
+  };
+
+  // node_modules/engine.io-client/build/esm/globalThis.browser.js
+  var globalThisShim = (() => {
+    if (typeof self !== "undefined") {
+      return self;
+    } else if (typeof window !== "undefined") {
+      return window;
+    } else {
+      return Function("return this")();
+    }
+  })();
+
+  // node_modules/engine.io-client/build/esm/util.js
+  function pick(obj, ...attr) {
+    return attr.reduce((acc, k) => {
+      if (obj.hasOwnProperty(k)) {
+        acc[k] = obj[k];
+      }
+      return acc;
+    }, {});
+  }
+  var NATIVE_SET_TIMEOUT = setTimeout;
+  var NATIVE_CLEAR_TIMEOUT = clearTimeout;
+  function installTimerFunctions(obj, opts) {
+    if (opts.useNativeTimers) {
+      obj.setTimeoutFn = NATIVE_SET_TIMEOUT.bind(globalThisShim);
+      obj.clearTimeoutFn = NATIVE_CLEAR_TIMEOUT.bind(globalThisShim);
+    } else {
+      obj.setTimeoutFn = setTimeout.bind(globalThisShim);
+      obj.clearTimeoutFn = clearTimeout.bind(globalThisShim);
+    }
+  }
+  var BASE64_OVERHEAD = 1.33;
+  function byteLength(obj) {
+    if (typeof obj === "string") {
+      return utf8Length(obj);
+    }
+    return Math.ceil((obj.byteLength || obj.size) * BASE64_OVERHEAD);
+  }
+  function utf8Length(str) {
+    let c = 0, length2 = 0;
+    for (let i2 = 0, l = str.length; i2 < l; i2++) {
+      c = str.charCodeAt(i2);
+      if (c < 128) {
+        length2 += 1;
+      } else if (c < 2048) {
+        length2 += 2;
+      } else if (c < 55296 || c >= 57344) {
+        length2 += 3;
+      } else {
+        i2++;
+        length2 += 4;
+      }
+    }
+    return length2;
+  }
+
+  // node_modules/engine.io-client/build/esm/transport.js
+  var TransportError = class extends Error {
+    constructor(reason, description, context) {
+      super(reason);
+      this.description = description;
+      this.context = context;
+      this.type = "TransportError";
+    }
+  };
+  var Transport = class extends Emitter {
+    constructor(opts) {
+      super();
+      this.writable = false;
+      installTimerFunctions(this, opts);
+      this.opts = opts;
+      this.query = opts.query;
+      this.readyState = "";
+      this.socket = opts.socket;
+    }
+    onError(reason, description, context) {
+      super.emitReserved("error", new TransportError(reason, description, context));
+      return this;
+    }
+    open() {
+      if ("closed" === this.readyState || "" === this.readyState) {
+        this.readyState = "opening";
+        this.doOpen();
+      }
+      return this;
+    }
+    close() {
+      if ("opening" === this.readyState || "open" === this.readyState) {
+        this.doClose();
+        this.onClose();
+      }
+      return this;
+    }
+    send(packets) {
+      if ("open" === this.readyState) {
+        this.write(packets);
+      } else {
+      }
+    }
+    onOpen() {
+      this.readyState = "open";
+      this.writable = true;
+      super.emitReserved("open");
+    }
+    onData(data) {
+      const packet = decodePacket_browser_default(data, this.socket.binaryType);
+      this.onPacket(packet);
+    }
+    onPacket(packet) {
+      super.emitReserved("packet", packet);
+    }
+    onClose(details) {
+      this.readyState = "closed";
+      super.emitReserved("close", details);
+    }
+  };
+
+  // node_modules/engine.io-client/build/esm/contrib/yeast.js
+  var alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split("");
+  var length = 64;
+  var map = {};
+  var seed = 0;
+  var i = 0;
+  var prev;
+  function encode(num) {
+    let encoded = "";
+    do {
+      encoded = alphabet[num % length] + encoded;
+      num = Math.floor(num / length);
+    } while (num > 0);
+    return encoded;
+  }
+  function yeast() {
+    const now = encode(+new Date());
+    if (now !== prev)
+      return seed = 0, prev = now;
+    return now + "." + encode(seed++);
+  }
+  for (; i < length; i++)
+    map[alphabet[i]] = i;
+
+  // node_modules/engine.io-client/build/esm/contrib/parseqs.js
+  function encode2(obj) {
+    let str = "";
+    for (let i2 in obj) {
+      if (obj.hasOwnProperty(i2)) {
+        if (str.length)
+          str += "&";
+        str += encodeURIComponent(i2) + "=" + encodeURIComponent(obj[i2]);
+      }
+    }
+    return str;
+  }
+  function decode2(qs) {
+    let qry = {};
+    let pairs = qs.split("&");
+    for (let i2 = 0, l = pairs.length; i2 < l; i2++) {
+      let pair = pairs[i2].split("=");
+      qry[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+    return qry;
+  }
+
+  // node_modules/engine.io-client/build/esm/contrib/has-cors.js
+  var value = false;
+  try {
+    value = typeof XMLHttpRequest !== "undefined" && "withCredentials" in new XMLHttpRequest();
+  } catch (err) {
+  }
+  var hasCORS = value;
+
+  // node_modules/engine.io-client/build/esm/transports/xmlhttprequest.browser.js
+  function XHR(opts) {
+    const xdomain = opts.xdomain;
+    try {
+      if ("undefined" !== typeof XMLHttpRequest && (!xdomain || hasCORS)) {
+        return new XMLHttpRequest();
+      }
+    } catch (e) {
+    }
+    if (!xdomain) {
+      try {
+        return new globalThisShim[["Active"].concat("Object").join("X")]("Microsoft.XMLHTTP");
+      } catch (e) {
+      }
+    }
+  }
+
+  // node_modules/engine.io-client/build/esm/transports/polling.js
+  function empty() {
+  }
+  var hasXHR2 = function() {
+    const xhr = new XHR({
+      xdomain: false
+    });
+    return null != xhr.responseType;
+  }();
+  var Polling = class extends Transport {
+    constructor(opts) {
+      super(opts);
+      this.polling = false;
+      if (typeof location !== "undefined") {
+        const isSSL = "https:" === location.protocol;
+        let port = location.port;
+        if (!port) {
+          port = isSSL ? "443" : "80";
+        }
+        this.xd = typeof location !== "undefined" && opts.hostname !== location.hostname || port !== opts.port;
+        this.xs = opts.secure !== isSSL;
+      }
+      const forceBase64 = opts && opts.forceBase64;
+      this.supportsBinary = hasXHR2 && !forceBase64;
+    }
+    get name() {
+      return "polling";
+    }
+    doOpen() {
+      this.poll();
+    }
+    pause(onPause) {
+      this.readyState = "pausing";
+      const pause = () => {
+        this.readyState = "paused";
+        onPause();
+      };
+      if (this.polling || !this.writable) {
+        let total = 0;
+        if (this.polling) {
+          total++;
+          this.once("pollComplete", function() {
+            --total || pause();
+          });
+        }
+        if (!this.writable) {
+          total++;
+          this.once("drain", function() {
+            --total || pause();
+          });
+        }
+      } else {
+        pause();
+      }
+    }
+    poll() {
+      this.polling = true;
+      this.doPoll();
+      this.emitReserved("poll");
+    }
+    onData(data) {
+      const callback = (packet) => {
+        if ("opening" === this.readyState && packet.type === "open") {
+          this.onOpen();
+        }
+        if ("close" === packet.type) {
+          this.onClose({ description: "transport closed by the server" });
+          return false;
+        }
+        this.onPacket(packet);
+      };
+      decodePayload(data, this.socket.binaryType).forEach(callback);
+      if ("closed" !== this.readyState) {
+        this.polling = false;
+        this.emitReserved("pollComplete");
+        if ("open" === this.readyState) {
+          this.poll();
+        } else {
+        }
+      }
+    }
+    doClose() {
+      const close = () => {
+        this.write([{ type: "close" }]);
+      };
+      if ("open" === this.readyState) {
+        close();
+      } else {
+        this.once("open", close);
+      }
+    }
+    write(packets) {
+      this.writable = false;
+      encodePayload(packets, (data) => {
+        this.doWrite(data, () => {
+          this.writable = true;
+          this.emitReserved("drain");
+        });
+      });
+    }
+    uri() {
+      let query = this.query || {};
+      const schema = this.opts.secure ? "https" : "http";
+      let port = "";
+      if (false !== this.opts.timestampRequests) {
+        query[this.opts.timestampParam] = yeast();
+      }
+      if (!this.supportsBinary && !query.sid) {
+        query.b64 = 1;
+      }
+      if (this.opts.port && ("https" === schema && Number(this.opts.port) !== 443 || "http" === schema && Number(this.opts.port) !== 80)) {
+        port = ":" + this.opts.port;
+      }
+      const encodedQuery = encode2(query);
+      const ipv6 = this.opts.hostname.indexOf(":") !== -1;
+      return schema + "://" + (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) + port + this.opts.path + (encodedQuery.length ? "?" + encodedQuery : "");
+    }
+    request(opts = {}) {
+      Object.assign(opts, { xd: this.xd, xs: this.xs }, this.opts);
+      return new Request(this.uri(), opts);
+    }
+    doWrite(data, fn) {
+      const req = this.request({
+        method: "POST",
+        data
+      });
+      req.on("success", fn);
+      req.on("error", (xhrStatus, context) => {
+        this.onError("xhr post error", xhrStatus, context);
+      });
+    }
+    doPoll() {
+      const req = this.request();
+      req.on("data", this.onData.bind(this));
+      req.on("error", (xhrStatus, context) => {
+        this.onError("xhr poll error", xhrStatus, context);
+      });
+      this.pollXhr = req;
+    }
+  };
+  var Request = class extends Emitter {
+    constructor(uri, opts) {
+      super();
+      installTimerFunctions(this, opts);
+      this.opts = opts;
+      this.method = opts.method || "GET";
+      this.uri = uri;
+      this.async = false !== opts.async;
+      this.data = void 0 !== opts.data ? opts.data : null;
+      this.create();
+    }
+    create() {
+      const opts = pick(this.opts, "agent", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "autoUnref");
+      opts.xdomain = !!this.opts.xd;
+      opts.xscheme = !!this.opts.xs;
+      const xhr = this.xhr = new XHR(opts);
+      try {
+        xhr.open(this.method, this.uri, this.async);
+        try {
+          if (this.opts.extraHeaders) {
+            xhr.setDisableHeaderCheck && xhr.setDisableHeaderCheck(true);
+            for (let i2 in this.opts.extraHeaders) {
+              if (this.opts.extraHeaders.hasOwnProperty(i2)) {
+                xhr.setRequestHeader(i2, this.opts.extraHeaders[i2]);
+              }
+            }
+          }
+        } catch (e) {
+        }
+        if ("POST" === this.method) {
+          try {
+            xhr.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+          } catch (e) {
+          }
+        }
+        try {
+          xhr.setRequestHeader("Accept", "*/*");
+        } catch (e) {
+        }
+        if ("withCredentials" in xhr) {
+          xhr.withCredentials = this.opts.withCredentials;
+        }
+        if (this.opts.requestTimeout) {
+          xhr.timeout = this.opts.requestTimeout;
+        }
+        xhr.onreadystatechange = () => {
+          if (4 !== xhr.readyState)
+            return;
+          if (200 === xhr.status || 1223 === xhr.status) {
+            this.onLoad();
+          } else {
+            this.setTimeoutFn(() => {
+              this.onError(typeof xhr.status === "number" ? xhr.status : 0);
+            }, 0);
+          }
+        };
+        xhr.send(this.data);
+      } catch (e) {
+        this.setTimeoutFn(() => {
+          this.onError(e);
+        }, 0);
+        return;
+      }
+      if (typeof document !== "undefined") {
+        this.index = Request.requestsCount++;
+        Request.requests[this.index] = this;
+      }
+    }
+    onError(err) {
+      this.emitReserved("error", err, this.xhr);
+      this.cleanup(true);
+    }
+    cleanup(fromError) {
+      if ("undefined" === typeof this.xhr || null === this.xhr) {
+        return;
+      }
+      this.xhr.onreadystatechange = empty;
+      if (fromError) {
+        try {
+          this.xhr.abort();
+        } catch (e) {
+        }
+      }
+      if (typeof document !== "undefined") {
+        delete Request.requests[this.index];
+      }
+      this.xhr = null;
+    }
+    onLoad() {
+      const data = this.xhr.responseText;
+      if (data !== null) {
+        this.emitReserved("data", data);
+        this.emitReserved("success");
+        this.cleanup();
+      }
+    }
+    abort() {
+      this.cleanup();
+    }
+  };
+  Request.requestsCount = 0;
+  Request.requests = {};
+  if (typeof document !== "undefined") {
+    if (typeof attachEvent === "function") {
+      attachEvent("onunload", unloadHandler);
+    } else if (typeof addEventListener === "function") {
+      const terminationEvent = "onpagehide" in globalThisShim ? "pagehide" : "unload";
+      addEventListener(terminationEvent, unloadHandler, false);
+    }
+  }
+  function unloadHandler() {
+    for (let i2 in Request.requests) {
+      if (Request.requests.hasOwnProperty(i2)) {
+        Request.requests[i2].abort();
+      }
+    }
+  }
+
+  // node_modules/engine.io-client/build/esm/transports/websocket-constructor.browser.js
+  var nextTick = (() => {
+    const isPromiseAvailable = typeof Promise === "function" && typeof Promise.resolve === "function";
+    if (isPromiseAvailable) {
+      return (cb) => Promise.resolve().then(cb);
+    } else {
+      return (cb, setTimeoutFn) => setTimeoutFn(cb, 0);
+    }
+  })();
+  var WebSocket = globalThisShim.WebSocket || globalThisShim.MozWebSocket;
+  var usingBrowserWebSocket = true;
+  var defaultBinaryType = "arraybuffer";
+
+  // node_modules/engine.io-client/build/esm/transports/websocket.js
+  var isReactNative = typeof navigator !== "undefined" && typeof navigator.product === "string" && navigator.product.toLowerCase() === "reactnative";
+  var WS = class extends Transport {
+    constructor(opts) {
+      super(opts);
+      this.supportsBinary = !opts.forceBase64;
+    }
+    get name() {
+      return "websocket";
+    }
+    doOpen() {
+      if (!this.check()) {
+        return;
+      }
+      const uri = this.uri();
+      const protocols = this.opts.protocols;
+      const opts = isReactNative ? {} : pick(this.opts, "agent", "perMessageDeflate", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "localAddress", "protocolVersion", "origin", "maxPayload", "family", "checkServerIdentity");
+      if (this.opts.extraHeaders) {
+        opts.headers = this.opts.extraHeaders;
+      }
+      try {
+        this.ws = usingBrowserWebSocket && !isReactNative ? protocols ? new WebSocket(uri, protocols) : new WebSocket(uri) : new WebSocket(uri, protocols, opts);
+      } catch (err) {
+        return this.emitReserved("error", err);
+      }
+      this.ws.binaryType = this.socket.binaryType || defaultBinaryType;
+      this.addEventListeners();
+    }
+    addEventListeners() {
+      this.ws.onopen = () => {
+        if (this.opts.autoUnref) {
+          this.ws._socket.unref();
+        }
+        this.onOpen();
+      };
+      this.ws.onclose = (closeEvent) => this.onClose({
+        description: "websocket connection closed",
+        context: closeEvent
+      });
+      this.ws.onmessage = (ev) => this.onData(ev.data);
+      this.ws.onerror = (e) => this.onError("websocket error", e);
+    }
+    write(packets) {
+      this.writable = false;
+      for (let i2 = 0; i2 < packets.length; i2++) {
+        const packet = packets[i2];
+        const lastPacket = i2 === packets.length - 1;
+        encodePacket_browser_default(packet, this.supportsBinary, (data) => {
+          const opts = {};
+          if (!usingBrowserWebSocket) {
+            if (packet.options) {
+              opts.compress = packet.options.compress;
+            }
+            if (this.opts.perMessageDeflate) {
+              const len = "string" === typeof data ? Buffer.byteLength(data) : data.length;
+              if (len < this.opts.perMessageDeflate.threshold) {
+                opts.compress = false;
+              }
+            }
+          }
+          try {
+            if (usingBrowserWebSocket) {
+              this.ws.send(data);
+            } else {
+              this.ws.send(data, opts);
+            }
+          } catch (e) {
+          }
+          if (lastPacket) {
+            nextTick(() => {
+              this.writable = true;
+              this.emitReserved("drain");
+            }, this.setTimeoutFn);
+          }
+        });
+      }
+    }
+    doClose() {
+      if (typeof this.ws !== "undefined") {
+        this.ws.close();
+        this.ws = null;
+      }
+    }
+    uri() {
+      let query = this.query || {};
+      const schema = this.opts.secure ? "wss" : "ws";
+      let port = "";
+      if (this.opts.port && ("wss" === schema && Number(this.opts.port) !== 443 || "ws" === schema && Number(this.opts.port) !== 80)) {
+        port = ":" + this.opts.port;
+      }
+      if (this.opts.timestampRequests) {
+        query[this.opts.timestampParam] = yeast();
+      }
+      if (!this.supportsBinary) {
+        query.b64 = 1;
+      }
+      const encodedQuery = encode2(query);
+      const ipv6 = this.opts.hostname.indexOf(":") !== -1;
+      return schema + "://" + (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) + port + this.opts.path + (encodedQuery.length ? "?" + encodedQuery : "");
+    }
+    check() {
+      return !!WebSocket;
+    }
+  };
+
+  // node_modules/engine.io-client/build/esm/transports/index.js
+  var transports = {
+    websocket: WS,
+    polling: Polling
+  };
+
+  // node_modules/engine.io-client/build/esm/contrib/parseuri.js
+  var re = /^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
+  var parts = [
+    "source",
+    "protocol",
+    "authority",
+    "userInfo",
+    "user",
+    "password",
+    "host",
+    "port",
+    "relative",
+    "path",
+    "directory",
+    "file",
+    "query",
+    "anchor"
+  ];
+  function parse(str) {
+    const src = str, b = str.indexOf("["), e = str.indexOf("]");
+    if (b != -1 && e != -1) {
+      str = str.substring(0, b) + str.substring(b, e).replace(/:/g, ";") + str.substring(e, str.length);
+    }
+    let m = re.exec(str || ""), uri = {}, i2 = 14;
+    while (i2--) {
+      uri[parts[i2]] = m[i2] || "";
+    }
+    if (b != -1 && e != -1) {
+      uri.source = src;
+      uri.host = uri.host.substring(1, uri.host.length - 1).replace(/;/g, ":");
+      uri.authority = uri.authority.replace("[", "").replace("]", "").replace(/;/g, ":");
+      uri.ipv6uri = true;
+    }
+    uri.pathNames = pathNames(uri, uri["path"]);
+    uri.queryKey = queryKey(uri, uri["query"]);
+    return uri;
+  }
+  function pathNames(obj, path) {
+    const regx = /\/{2,9}/g, names = path.replace(regx, "/").split("/");
+    if (path.substr(0, 1) == "/" || path.length === 0) {
+      names.splice(0, 1);
+    }
+    if (path.substr(path.length - 1, 1) == "/") {
+      names.splice(names.length - 1, 1);
+    }
+    return names;
+  }
+  function queryKey(uri, query) {
+    const data = {};
+    query.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function($0, $1, $2) {
+      if ($1) {
+        data[$1] = $2;
+      }
+    });
+    return data;
+  }
+
+  // node_modules/engine.io-client/build/esm/socket.js
+  var Socket = class extends Emitter {
+    constructor(uri, opts = {}) {
+      super();
+      if (uri && "object" === typeof uri) {
+        opts = uri;
+        uri = null;
+      }
+      if (uri) {
+        uri = parse(uri);
+        opts.hostname = uri.host;
+        opts.secure = uri.protocol === "https" || uri.protocol === "wss";
+        opts.port = uri.port;
+        if (uri.query)
+          opts.query = uri.query;
+      } else if (opts.host) {
+        opts.hostname = parse(opts.host).host;
+      }
+      installTimerFunctions(this, opts);
+      this.secure = null != opts.secure ? opts.secure : typeof location !== "undefined" && "https:" === location.protocol;
+      if (opts.hostname && !opts.port) {
+        opts.port = this.secure ? "443" : "80";
+      }
+      this.hostname = opts.hostname || (typeof location !== "undefined" ? location.hostname : "localhost");
+      this.port = opts.port || (typeof location !== "undefined" && location.port ? location.port : this.secure ? "443" : "80");
+      this.transports = opts.transports || ["polling", "websocket"];
+      this.readyState = "";
+      this.writeBuffer = [];
+      this.prevBufferLen = 0;
+      this.opts = Object.assign({
+        path: "/engine.io",
+        agent: false,
+        withCredentials: false,
+        upgrade: true,
+        timestampParam: "t",
+        rememberUpgrade: false,
+        rejectUnauthorized: true,
+        perMessageDeflate: {
+          threshold: 1024
+        },
+        transportOptions: {},
+        closeOnBeforeunload: true
+      }, opts);
+      this.opts.path = this.opts.path.replace(/\/$/, "") + "/";
+      if (typeof this.opts.query === "string") {
+        this.opts.query = decode2(this.opts.query);
+      }
+      this.id = null;
+      this.upgrades = null;
+      this.pingInterval = null;
+      this.pingTimeout = null;
+      this.pingTimeoutTimer = null;
+      if (typeof addEventListener === "function") {
+        if (this.opts.closeOnBeforeunload) {
+          addEventListener("beforeunload", () => {
+            if (this.transport) {
+              this.transport.removeAllListeners();
+              this.transport.close();
+            }
+          }, false);
+        }
+        if (this.hostname !== "localhost") {
+          this.offlineEventListener = () => {
+            this.onClose("transport close", {
+              description: "network connection lost"
+            });
+          };
+          addEventListener("offline", this.offlineEventListener, false);
+        }
+      }
+      this.open();
+    }
+    createTransport(name) {
+      const query = Object.assign({}, this.opts.query);
+      query.EIO = protocol;
+      query.transport = name;
+      if (this.id)
+        query.sid = this.id;
+      const opts = Object.assign({}, this.opts.transportOptions[name], this.opts, {
+        query,
+        socket: this,
+        hostname: this.hostname,
+        secure: this.secure,
+        port: this.port
+      });
+      return new transports[name](opts);
+    }
+    open() {
+      let transport;
+      if (this.opts.rememberUpgrade && Socket.priorWebsocketSuccess && this.transports.indexOf("websocket") !== -1) {
+        transport = "websocket";
+      } else if (0 === this.transports.length) {
+        this.setTimeoutFn(() => {
+          this.emitReserved("error", "No transports available");
+        }, 0);
+        return;
+      } else {
+        transport = this.transports[0];
+      }
+      this.readyState = "opening";
+      try {
+        transport = this.createTransport(transport);
+      } catch (e) {
+        this.transports.shift();
+        this.open();
+        return;
+      }
+      transport.open();
+      this.setTransport(transport);
+    }
+    setTransport(transport) {
+      if (this.transport) {
+        this.transport.removeAllListeners();
+      }
+      this.transport = transport;
+      transport.on("drain", this.onDrain.bind(this)).on("packet", this.onPacket.bind(this)).on("error", this.onError.bind(this)).on("close", (reason) => this.onClose("transport close", reason));
+    }
+    probe(name) {
+      let transport = this.createTransport(name);
+      let failed = false;
+      Socket.priorWebsocketSuccess = false;
+      const onTransportOpen = () => {
+        if (failed)
+          return;
+        transport.send([{ type: "ping", data: "probe" }]);
+        transport.once("packet", (msg) => {
+          if (failed)
+            return;
+          if ("pong" === msg.type && "probe" === msg.data) {
+            this.upgrading = true;
+            this.emitReserved("upgrading", transport);
+            if (!transport)
+              return;
+            Socket.priorWebsocketSuccess = "websocket" === transport.name;
+            this.transport.pause(() => {
+              if (failed)
+                return;
+              if ("closed" === this.readyState)
+                return;
+              cleanup();
+              this.setTransport(transport);
+              transport.send([{ type: "upgrade" }]);
+              this.emitReserved("upgrade", transport);
+              transport = null;
+              this.upgrading = false;
+              this.flush();
+            });
+          } else {
+            const err = new Error("probe error");
+            err.transport = transport.name;
+            this.emitReserved("upgradeError", err);
+          }
+        });
+      };
+      function freezeTransport() {
+        if (failed)
+          return;
+        failed = true;
+        cleanup();
+        transport.close();
+        transport = null;
+      }
+      const onerror = (err) => {
+        const error = new Error("probe error: " + err);
+        error.transport = transport.name;
+        freezeTransport();
+        this.emitReserved("upgradeError", error);
+      };
+      function onTransportClose() {
+        onerror("transport closed");
+      }
+      function onclose() {
+        onerror("socket closed");
+      }
+      function onupgrade(to) {
+        if (transport && to.name !== transport.name) {
+          freezeTransport();
+        }
+      }
+      const cleanup = () => {
+        transport.removeListener("open", onTransportOpen);
+        transport.removeListener("error", onerror);
+        transport.removeListener("close", onTransportClose);
+        this.off("close", onclose);
+        this.off("upgrading", onupgrade);
+      };
+      transport.once("open", onTransportOpen);
+      transport.once("error", onerror);
+      transport.once("close", onTransportClose);
+      this.once("close", onclose);
+      this.once("upgrading", onupgrade);
+      transport.open();
+    }
+    onOpen() {
+      this.readyState = "open";
+      Socket.priorWebsocketSuccess = "websocket" === this.transport.name;
+      this.emitReserved("open");
+      this.flush();
+      if ("open" === this.readyState && this.opts.upgrade && this.transport.pause) {
+        let i2 = 0;
+        const l = this.upgrades.length;
+        for (; i2 < l; i2++) {
+          this.probe(this.upgrades[i2]);
+        }
+      }
+    }
+    onPacket(packet) {
+      if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState) {
+        this.emitReserved("packet", packet);
+        this.emitReserved("heartbeat");
+        switch (packet.type) {
+          case "open":
+            this.onHandshake(JSON.parse(packet.data));
+            break;
+          case "ping":
+            this.resetPingTimeout();
+            this.sendPacket("pong");
+            this.emitReserved("ping");
+            this.emitReserved("pong");
+            break;
+          case "error":
+            const err = new Error("server error");
+            err.code = packet.data;
+            this.onError(err);
+            break;
+          case "message":
+            this.emitReserved("data", packet.data);
+            this.emitReserved("message", packet.data);
+            break;
+        }
+      } else {
+      }
+    }
+    onHandshake(data) {
+      this.emitReserved("handshake", data);
+      this.id = data.sid;
+      this.transport.query.sid = data.sid;
+      this.upgrades = this.filterUpgrades(data.upgrades);
+      this.pingInterval = data.pingInterval;
+      this.pingTimeout = data.pingTimeout;
+      this.maxPayload = data.maxPayload;
+      this.onOpen();
+      if ("closed" === this.readyState)
+        return;
+      this.resetPingTimeout();
+    }
+    resetPingTimeout() {
+      this.clearTimeoutFn(this.pingTimeoutTimer);
+      this.pingTimeoutTimer = this.setTimeoutFn(() => {
+        this.onClose("ping timeout");
+      }, this.pingInterval + this.pingTimeout);
+      if (this.opts.autoUnref) {
+        this.pingTimeoutTimer.unref();
+      }
+    }
+    onDrain() {
+      this.writeBuffer.splice(0, this.prevBufferLen);
+      this.prevBufferLen = 0;
+      if (0 === this.writeBuffer.length) {
+        this.emitReserved("drain");
+      } else {
+        this.flush();
+      }
+    }
+    flush() {
+      if ("closed" !== this.readyState && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
+        const packets = this.getWritablePackets();
+        this.transport.send(packets);
+        this.prevBufferLen = packets.length;
+        this.emitReserved("flush");
+      }
+    }
+    getWritablePackets() {
+      const shouldCheckPayloadSize = this.maxPayload && this.transport.name === "polling" && this.writeBuffer.length > 1;
+      if (!shouldCheckPayloadSize) {
+        return this.writeBuffer;
+      }
+      let payloadSize = 1;
+      for (let i2 = 0; i2 < this.writeBuffer.length; i2++) {
+        const data = this.writeBuffer[i2].data;
+        if (data) {
+          payloadSize += byteLength(data);
+        }
+        if (i2 > 0 && payloadSize > this.maxPayload) {
+          return this.writeBuffer.slice(0, i2);
+        }
+        payloadSize += 2;
+      }
+      return this.writeBuffer;
+    }
+    write(msg, options, fn) {
+      this.sendPacket("message", msg, options, fn);
+      return this;
+    }
+    send(msg, options, fn) {
+      this.sendPacket("message", msg, options, fn);
+      return this;
+    }
+    sendPacket(type, data, options, fn) {
+      if ("function" === typeof data) {
+        fn = data;
+        data = void 0;
+      }
+      if ("function" === typeof options) {
+        fn = options;
+        options = null;
+      }
+      if ("closing" === this.readyState || "closed" === this.readyState) {
+        return;
+      }
+      options = options || {};
+      options.compress = false !== options.compress;
+      const packet = {
+        type,
+        data,
+        options
+      };
+      this.emitReserved("packetCreate", packet);
+      this.writeBuffer.push(packet);
+      if (fn)
+        this.once("flush", fn);
+      this.flush();
+    }
+    close() {
+      const close = () => {
+        this.onClose("forced close");
+        this.transport.close();
+      };
+      const cleanupAndClose = () => {
+        this.off("upgrade", cleanupAndClose);
+        this.off("upgradeError", cleanupAndClose);
+        close();
+      };
+      const waitForUpgrade = () => {
+        this.once("upgrade", cleanupAndClose);
+        this.once("upgradeError", cleanupAndClose);
+      };
+      if ("opening" === this.readyState || "open" === this.readyState) {
+        this.readyState = "closing";
+        if (this.writeBuffer.length) {
+          this.once("drain", () => {
+            if (this.upgrading) {
+              waitForUpgrade();
+            } else {
+              close();
+            }
+          });
+        } else if (this.upgrading) {
+          waitForUpgrade();
+        } else {
+          close();
+        }
+      }
+      return this;
+    }
+    onError(err) {
+      Socket.priorWebsocketSuccess = false;
+      this.emitReserved("error", err);
+      this.onClose("transport error", err);
+    }
+    onClose(reason, description) {
+      if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState) {
+        this.clearTimeoutFn(this.pingTimeoutTimer);
+        this.transport.removeAllListeners("close");
+        this.transport.close();
+        this.transport.removeAllListeners();
+        if (typeof removeEventListener === "function") {
+          removeEventListener("offline", this.offlineEventListener, false);
+        }
+        this.readyState = "closed";
+        this.id = null;
+        this.emitReserved("close", reason, description);
+        this.writeBuffer = [];
+        this.prevBufferLen = 0;
+      }
+    }
+    filterUpgrades(upgrades) {
+      const filteredUpgrades = [];
+      let i2 = 0;
+      const j = upgrades.length;
+      for (; i2 < j; i2++) {
+        if (~this.transports.indexOf(upgrades[i2]))
+          filteredUpgrades.push(upgrades[i2]);
+      }
+      return filteredUpgrades;
+    }
+  };
+  Socket.protocol = protocol;
+
+  // node_modules/engine.io-client/build/esm/index.js
+  var protocol2 = Socket.protocol;
+
+  // node_modules/socket.io-client/build/esm/url.js
+  function url(uri, path = "", loc) {
+    let obj = uri;
+    loc = loc || typeof location !== "undefined" && location;
+    if (null == uri)
+      uri = loc.protocol + "//" + loc.host;
+    if (typeof uri === "string") {
+      if ("/" === uri.charAt(0)) {
+        if ("/" === uri.charAt(1)) {
+          uri = loc.protocol + uri;
+        } else {
+          uri = loc.host + uri;
+        }
+      }
+      if (!/^(https?|wss?):\/\//.test(uri)) {
+        if ("undefined" !== typeof loc) {
+          uri = loc.protocol + "//" + uri;
+        } else {
+          uri = "https://" + uri;
+        }
+      }
+      obj = parse(uri);
+    }
+    if (!obj.port) {
+      if (/^(http|ws)$/.test(obj.protocol)) {
+        obj.port = "80";
+      } else if (/^(http|ws)s$/.test(obj.protocol)) {
+        obj.port = "443";
+      }
+    }
+    obj.path = obj.path || "/";
+    const ipv6 = obj.host.indexOf(":") !== -1;
+    const host = ipv6 ? "[" + obj.host + "]" : obj.host;
+    obj.id = obj.protocol + "://" + host + ":" + obj.port + path;
+    obj.href = obj.protocol + "://" + host + (loc && loc.port === obj.port ? "" : ":" + obj.port);
+    return obj;
+  }
+
+  // node_modules/socket.io-client/node_modules/socket.io-parser/build/esm/index.js
+  var esm_exports = {};
+  __export(esm_exports, {
+    Decoder: () => Decoder,
+    Encoder: () => Encoder,
+    PacketType: () => PacketType,
+    protocol: () => protocol3
+  });
+
+  // node_modules/socket.io-client/node_modules/socket.io-parser/build/esm/is-binary.js
+  var withNativeArrayBuffer3 = typeof ArrayBuffer === "function";
+  var isView2 = (obj) => {
+    return typeof ArrayBuffer.isView === "function" ? ArrayBuffer.isView(obj) : obj.buffer instanceof ArrayBuffer;
+  };
+  var toString = Object.prototype.toString;
+  var withNativeBlob2 = typeof Blob === "function" || typeof Blob !== "undefined" && toString.call(Blob) === "[object BlobConstructor]";
+  var withNativeFile = typeof File === "function" || typeof File !== "undefined" && toString.call(File) === "[object FileConstructor]";
+  function isBinary(obj) {
+    return withNativeArrayBuffer3 && (obj instanceof ArrayBuffer || isView2(obj)) || withNativeBlob2 && obj instanceof Blob || withNativeFile && obj instanceof File;
+  }
+  function hasBinary(obj, toJSON) {
+    if (!obj || typeof obj !== "object") {
+      return false;
+    }
+    if (Array.isArray(obj)) {
+      for (let i2 = 0, l = obj.length; i2 < l; i2++) {
+        if (hasBinary(obj[i2])) {
+          return true;
+        }
+      }
+      return false;
+    }
+    if (isBinary(obj)) {
+      return true;
+    }
+    if (obj.toJSON && typeof obj.toJSON === "function" && arguments.length === 1) {
+      return hasBinary(obj.toJSON(), true);
+    }
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key) && hasBinary(obj[key])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // node_modules/socket.io-client/node_modules/socket.io-parser/build/esm/binary.js
+  function deconstructPacket(packet) {
+    const buffers = [];
+    const packetData = packet.data;
+    const pack = packet;
+    pack.data = _deconstructPacket(packetData, buffers);
+    pack.attachments = buffers.length;
+    return { packet: pack, buffers };
+  }
+  function _deconstructPacket(data, buffers) {
+    if (!data)
+      return data;
+    if (isBinary(data)) {
+      const placeholder = { _placeholder: true, num: buffers.length };
+      buffers.push(data);
+      return placeholder;
+    } else if (Array.isArray(data)) {
+      const newData = new Array(data.length);
+      for (let i2 = 0; i2 < data.length; i2++) {
+        newData[i2] = _deconstructPacket(data[i2], buffers);
+      }
+      return newData;
+    } else if (typeof data === "object" && !(data instanceof Date)) {
+      const newData = {};
+      for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          newData[key] = _deconstructPacket(data[key], buffers);
+        }
+      }
+      return newData;
+    }
+    return data;
+  }
+  function reconstructPacket(packet, buffers) {
+    packet.data = _reconstructPacket(packet.data, buffers);
+    packet.attachments = void 0;
+    return packet;
+  }
+  function _reconstructPacket(data, buffers) {
+    if (!data)
+      return data;
+    if (data && data._placeholder === true) {
+      const isIndexValid = typeof data.num === "number" && data.num >= 0 && data.num < buffers.length;
+      if (isIndexValid) {
+        return buffers[data.num];
+      } else {
+        throw new Error("illegal attachments");
+      }
+    } else if (Array.isArray(data)) {
+      for (let i2 = 0; i2 < data.length; i2++) {
+        data[i2] = _reconstructPacket(data[i2], buffers);
+      }
+    } else if (typeof data === "object") {
+      for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          data[key] = _reconstructPacket(data[key], buffers);
+        }
+      }
+    }
+    return data;
+  }
+
+  // node_modules/socket.io-client/node_modules/socket.io-parser/build/esm/index.js
+  var protocol3 = 5;
+  var PacketType;
+  (function(PacketType2) {
+    PacketType2[PacketType2["CONNECT"] = 0] = "CONNECT";
+    PacketType2[PacketType2["DISCONNECT"] = 1] = "DISCONNECT";
+    PacketType2[PacketType2["EVENT"] = 2] = "EVENT";
+    PacketType2[PacketType2["ACK"] = 3] = "ACK";
+    PacketType2[PacketType2["CONNECT_ERROR"] = 4] = "CONNECT_ERROR";
+    PacketType2[PacketType2["BINARY_EVENT"] = 5] = "BINARY_EVENT";
+    PacketType2[PacketType2["BINARY_ACK"] = 6] = "BINARY_ACK";
+  })(PacketType || (PacketType = {}));
+  var Encoder = class {
+    constructor(replacer) {
+      this.replacer = replacer;
+    }
+    encode(obj) {
+      if (obj.type === PacketType.EVENT || obj.type === PacketType.ACK) {
+        if (hasBinary(obj)) {
+          obj.type = obj.type === PacketType.EVENT ? PacketType.BINARY_EVENT : PacketType.BINARY_ACK;
+          return this.encodeAsBinary(obj);
+        }
+      }
+      return [this.encodeAsString(obj)];
+    }
+    encodeAsString(obj) {
+      let str = "" + obj.type;
+      if (obj.type === PacketType.BINARY_EVENT || obj.type === PacketType.BINARY_ACK) {
+        str += obj.attachments + "-";
+      }
+      if (obj.nsp && "/" !== obj.nsp) {
+        str += obj.nsp + ",";
+      }
+      if (null != obj.id) {
+        str += obj.id;
+      }
+      if (null != obj.data) {
+        str += JSON.stringify(obj.data, this.replacer);
+      }
+      return str;
+    }
+    encodeAsBinary(obj) {
+      const deconstruction = deconstructPacket(obj);
+      const pack = this.encodeAsString(deconstruction.packet);
+      const buffers = deconstruction.buffers;
+      buffers.unshift(pack);
+      return buffers;
+    }
+  };
+  var Decoder = class extends Emitter {
+    constructor(reviver) {
+      super();
+      this.reviver = reviver;
+    }
+    add(obj) {
+      let packet;
+      if (typeof obj === "string") {
+        if (this.reconstructor) {
+          throw new Error("got plaintext data when reconstructing a packet");
+        }
+        packet = this.decodeString(obj);
+        if (packet.type === PacketType.BINARY_EVENT || packet.type === PacketType.BINARY_ACK) {
+          this.reconstructor = new BinaryReconstructor(packet);
+          if (packet.attachments === 0) {
+            super.emitReserved("decoded", packet);
+          }
+        } else {
+          super.emitReserved("decoded", packet);
+        }
+      } else if (isBinary(obj) || obj.base64) {
+        if (!this.reconstructor) {
+          throw new Error("got binary data when not reconstructing a packet");
+        } else {
+          packet = this.reconstructor.takeBinaryData(obj);
+          if (packet) {
+            this.reconstructor = null;
+            super.emitReserved("decoded", packet);
+          }
+        }
+      } else {
+        throw new Error("Unknown type: " + obj);
+      }
+    }
+    decodeString(str) {
+      let i2 = 0;
+      const p = {
+        type: Number(str.charAt(0))
+      };
+      if (PacketType[p.type] === void 0) {
+        throw new Error("unknown packet type " + p.type);
+      }
+      if (p.type === PacketType.BINARY_EVENT || p.type === PacketType.BINARY_ACK) {
+        const start = i2 + 1;
+        while (str.charAt(++i2) !== "-" && i2 != str.length) {
+        }
+        const buf = str.substring(start, i2);
+        if (buf != Number(buf) || str.charAt(i2) !== "-") {
+          throw new Error("Illegal attachments");
+        }
+        p.attachments = Number(buf);
+      }
+      if ("/" === str.charAt(i2 + 1)) {
+        const start = i2 + 1;
+        while (++i2) {
+          const c = str.charAt(i2);
+          if ("," === c)
+            break;
+          if (i2 === str.length)
+            break;
+        }
+        p.nsp = str.substring(start, i2);
+      } else {
+        p.nsp = "/";
+      }
+      const next = str.charAt(i2 + 1);
+      if ("" !== next && Number(next) == next) {
+        const start = i2 + 1;
+        while (++i2) {
+          const c = str.charAt(i2);
+          if (null == c || Number(c) != c) {
+            --i2;
+            break;
+          }
+          if (i2 === str.length)
+            break;
+        }
+        p.id = Number(str.substring(start, i2 + 1));
+      }
+      if (str.charAt(++i2)) {
+        const payload = this.tryParse(str.substr(i2));
+        if (Decoder.isPayloadValid(p.type, payload)) {
+          p.data = payload;
+        } else {
+          throw new Error("invalid payload");
+        }
+      }
+      return p;
+    }
+    tryParse(str) {
+      try {
+        return JSON.parse(str, this.reviver);
+      } catch (e) {
+        return false;
+      }
+    }
+    static isPayloadValid(type, payload) {
+      switch (type) {
+        case PacketType.CONNECT:
+          return typeof payload === "object";
+        case PacketType.DISCONNECT:
+          return payload === void 0;
+        case PacketType.CONNECT_ERROR:
+          return typeof payload === "string" || typeof payload === "object";
+        case PacketType.EVENT:
+        case PacketType.BINARY_EVENT:
+          return Array.isArray(payload) && payload.length > 0;
+        case PacketType.ACK:
+        case PacketType.BINARY_ACK:
+          return Array.isArray(payload);
+      }
+    }
+    destroy() {
+      if (this.reconstructor) {
+        this.reconstructor.finishedReconstruction();
+      }
+    }
+  };
+  var BinaryReconstructor = class {
+    constructor(packet) {
+      this.packet = packet;
+      this.buffers = [];
+      this.reconPack = packet;
+    }
+    takeBinaryData(binData) {
+      this.buffers.push(binData);
+      if (this.buffers.length === this.reconPack.attachments) {
+        const packet = reconstructPacket(this.reconPack, this.buffers);
+        this.finishedReconstruction();
+        return packet;
+      }
+      return null;
+    }
+    finishedReconstruction() {
+      this.reconPack = null;
+      this.buffers = [];
+    }
+  };
+
+  // node_modules/socket.io-client/build/esm/on.js
+  function on(obj, ev, fn) {
+    obj.on(ev, fn);
+    return function subDestroy() {
+      obj.off(ev, fn);
+    };
+  }
+
+  // node_modules/socket.io-client/build/esm/socket.js
+  var RESERVED_EVENTS = Object.freeze({
+    connect: 1,
+    connect_error: 1,
+    disconnect: 1,
+    disconnecting: 1,
+    newListener: 1,
+    removeListener: 1
+  });
+  var Socket2 = class extends Emitter {
+    constructor(io, nsp, opts) {
+      super();
+      this.connected = false;
+      this.receiveBuffer = [];
+      this.sendBuffer = [];
+      this.ids = 0;
+      this.acks = {};
+      this.flags = {};
+      this.io = io;
+      this.nsp = nsp;
+      if (opts && opts.auth) {
+        this.auth = opts.auth;
+      }
+      if (this.io._autoConnect)
+        this.open();
+    }
+    get disconnected() {
+      return !this.connected;
+    }
+    subEvents() {
+      if (this.subs)
+        return;
+      const io = this.io;
+      this.subs = [
+        on(io, "open", this.onopen.bind(this)),
+        on(io, "packet", this.onpacket.bind(this)),
+        on(io, "error", this.onerror.bind(this)),
+        on(io, "close", this.onclose.bind(this))
+      ];
+    }
+    get active() {
+      return !!this.subs;
+    }
+    connect() {
+      if (this.connected)
+        return this;
+      this.subEvents();
+      if (!this.io["_reconnecting"])
+        this.io.open();
+      if ("open" === this.io._readyState)
+        this.onopen();
+      return this;
+    }
+    open() {
+      return this.connect();
+    }
+    send(...args) {
+      args.unshift("message");
+      this.emit.apply(this, args);
+      return this;
+    }
+    emit(ev, ...args) {
+      if (RESERVED_EVENTS.hasOwnProperty(ev)) {
+        throw new Error('"' + ev + '" is a reserved event name');
+      }
+      args.unshift(ev);
+      const packet = {
+        type: PacketType.EVENT,
+        data: args
+      };
+      packet.options = {};
+      packet.options.compress = this.flags.compress !== false;
+      if ("function" === typeof args[args.length - 1]) {
+        const id = this.ids++;
+        const ack = args.pop();
+        this._registerAckCallback(id, ack);
+        packet.id = id;
+      }
+      const isTransportWritable = this.io.engine && this.io.engine.transport && this.io.engine.transport.writable;
+      const discardPacket = this.flags.volatile && (!isTransportWritable || !this.connected);
+      if (discardPacket) {
+      } else if (this.connected) {
+        this.notifyOutgoingListeners(packet);
+        this.packet(packet);
+      } else {
+        this.sendBuffer.push(packet);
+      }
+      this.flags = {};
+      return this;
+    }
+    _registerAckCallback(id, ack) {
+      const timeout = this.flags.timeout;
+      if (timeout === void 0) {
+        this.acks[id] = ack;
+        return;
+      }
+      const timer = this.io.setTimeoutFn(() => {
+        delete this.acks[id];
+        for (let i2 = 0; i2 < this.sendBuffer.length; i2++) {
+          if (this.sendBuffer[i2].id === id) {
+            this.sendBuffer.splice(i2, 1);
+          }
+        }
+        ack.call(this, new Error("operation has timed out"));
+      }, timeout);
+      this.acks[id] = (...args) => {
+        this.io.clearTimeoutFn(timer);
+        ack.apply(this, [null, ...args]);
+      };
+    }
+    packet(packet) {
+      packet.nsp = this.nsp;
+      this.io._packet(packet);
+    }
+    onopen() {
+      if (typeof this.auth == "function") {
+        this.auth((data) => {
+          this.packet({ type: PacketType.CONNECT, data });
+        });
+      } else {
+        this.packet({ type: PacketType.CONNECT, data: this.auth });
+      }
+    }
+    onerror(err) {
+      if (!this.connected) {
+        this.emitReserved("connect_error", err);
+      }
+    }
+    onclose(reason, description) {
+      this.connected = false;
+      delete this.id;
+      this.emitReserved("disconnect", reason, description);
+    }
+    onpacket(packet) {
+      const sameNamespace = packet.nsp === this.nsp;
+      if (!sameNamespace)
+        return;
+      switch (packet.type) {
+        case PacketType.CONNECT:
+          if (packet.data && packet.data.sid) {
+            const id = packet.data.sid;
+            this.onconnect(id);
+          } else {
+            this.emitReserved("connect_error", new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));
+          }
+          break;
+        case PacketType.EVENT:
+        case PacketType.BINARY_EVENT:
+          this.onevent(packet);
+          break;
+        case PacketType.ACK:
+        case PacketType.BINARY_ACK:
+          this.onack(packet);
+          break;
+        case PacketType.DISCONNECT:
+          this.ondisconnect();
+          break;
+        case PacketType.CONNECT_ERROR:
+          this.destroy();
+          const err = new Error(packet.data.message);
+          err.data = packet.data.data;
+          this.emitReserved("connect_error", err);
+          break;
+      }
+    }
+    onevent(packet) {
+      const args = packet.data || [];
+      if (null != packet.id) {
+        args.push(this.ack(packet.id));
+      }
+      if (this.connected) {
+        this.emitEvent(args);
+      } else {
+        this.receiveBuffer.push(Object.freeze(args));
+      }
+    }
+    emitEvent(args) {
+      if (this._anyListeners && this._anyListeners.length) {
+        const listeners = this._anyListeners.slice();
+        for (const listener of listeners) {
+          listener.apply(this, args);
+        }
+      }
+      super.emit.apply(this, args);
+    }
+    ack(id) {
+      const self2 = this;
+      let sent = false;
+      return function(...args) {
+        if (sent)
+          return;
+        sent = true;
+        self2.packet({
+          type: PacketType.ACK,
+          id,
+          data: args
+        });
+      };
+    }
+    onack(packet) {
+      const ack = this.acks[packet.id];
+      if ("function" === typeof ack) {
+        ack.apply(this, packet.data);
+        delete this.acks[packet.id];
+      } else {
+      }
+    }
+    onconnect(id) {
+      this.id = id;
+      this.connected = true;
+      this.emitBuffered();
+      this.emitReserved("connect");
+    }
+    emitBuffered() {
+      this.receiveBuffer.forEach((args) => this.emitEvent(args));
+      this.receiveBuffer = [];
+      this.sendBuffer.forEach((packet) => {
+        this.notifyOutgoingListeners(packet);
+        this.packet(packet);
+      });
+      this.sendBuffer = [];
+    }
+    ondisconnect() {
+      this.destroy();
+      this.onclose("io server disconnect");
+    }
+    destroy() {
+      if (this.subs) {
+        this.subs.forEach((subDestroy) => subDestroy());
+        this.subs = void 0;
+      }
+      this.io["_destroy"](this);
+    }
+    disconnect() {
+      if (this.connected) {
+        this.packet({ type: PacketType.DISCONNECT });
+      }
+      this.destroy();
+      if (this.connected) {
+        this.onclose("io client disconnect");
+      }
+      return this;
+    }
+    close() {
+      return this.disconnect();
+    }
+    compress(compress) {
+      this.flags.compress = compress;
+      return this;
+    }
+    get volatile() {
+      this.flags.volatile = true;
+      return this;
+    }
+    timeout(timeout) {
+      this.flags.timeout = timeout;
+      return this;
+    }
+    onAny(listener) {
+      this._anyListeners = this._anyListeners || [];
+      this._anyListeners.push(listener);
+      return this;
+    }
+    prependAny(listener) {
+      this._anyListeners = this._anyListeners || [];
+      this._anyListeners.unshift(listener);
+      return this;
+    }
+    offAny(listener) {
+      if (!this._anyListeners) {
+        return this;
+      }
+      if (listener) {
+        const listeners = this._anyListeners;
+        for (let i2 = 0; i2 < listeners.length; i2++) {
+          if (listener === listeners[i2]) {
+            listeners.splice(i2, 1);
+            return this;
+          }
+        }
+      } else {
+        this._anyListeners = [];
+      }
+      return this;
+    }
+    listenersAny() {
+      return this._anyListeners || [];
+    }
+    onAnyOutgoing(listener) {
+      this._anyOutgoingListeners = this._anyOutgoingListeners || [];
+      this._anyOutgoingListeners.push(listener);
+      return this;
+    }
+    prependAnyOutgoing(listener) {
+      this._anyOutgoingListeners = this._anyOutgoingListeners || [];
+      this._anyOutgoingListeners.unshift(listener);
+      return this;
+    }
+    offAnyOutgoing(listener) {
+      if (!this._anyOutgoingListeners) {
+        return this;
+      }
+      if (listener) {
+        const listeners = this._anyOutgoingListeners;
+        for (let i2 = 0; i2 < listeners.length; i2++) {
+          if (listener === listeners[i2]) {
+            listeners.splice(i2, 1);
+            return this;
+          }
+        }
+      } else {
+        this._anyOutgoingListeners = [];
+      }
+      return this;
+    }
+    listenersAnyOutgoing() {
+      return this._anyOutgoingListeners || [];
+    }
+    notifyOutgoingListeners(packet) {
+      if (this._anyOutgoingListeners && this._anyOutgoingListeners.length) {
+        const listeners = this._anyOutgoingListeners.slice();
+        for (const listener of listeners) {
+          listener.apply(this, packet.data);
+        }
+      }
+    }
+  };
+
+  // node_modules/socket.io-client/build/esm/contrib/backo2.js
+  function Backoff(opts) {
+    opts = opts || {};
+    this.ms = opts.min || 100;
+    this.max = opts.max || 1e4;
+    this.factor = opts.factor || 2;
+    this.jitter = opts.jitter > 0 && opts.jitter <= 1 ? opts.jitter : 0;
+    this.attempts = 0;
+  }
+  Backoff.prototype.duration = function() {
+    var ms = this.ms * Math.pow(this.factor, this.attempts++);
+    if (this.jitter) {
+      var rand = Math.random();
+      var deviation = Math.floor(rand * this.jitter * ms);
+      ms = (Math.floor(rand * 10) & 1) == 0 ? ms - deviation : ms + deviation;
+    }
+    return Math.min(ms, this.max) | 0;
+  };
+  Backoff.prototype.reset = function() {
+    this.attempts = 0;
+  };
+  Backoff.prototype.setMin = function(min) {
+    this.ms = min;
+  };
+  Backoff.prototype.setMax = function(max) {
+    this.max = max;
+  };
+  Backoff.prototype.setJitter = function(jitter) {
+    this.jitter = jitter;
+  };
+
+  // node_modules/socket.io-client/build/esm/manager.js
+  var Manager = class extends Emitter {
+    constructor(uri, opts) {
+      var _a;
+      super();
+      this.nsps = {};
+      this.subs = [];
+      if (uri && "object" === typeof uri) {
+        opts = uri;
+        uri = void 0;
+      }
+      opts = opts || {};
+      opts.path = opts.path || "/socket.io";
+      this.opts = opts;
+      installTimerFunctions(this, opts);
+      this.reconnection(opts.reconnection !== false);
+      this.reconnectionAttempts(opts.reconnectionAttempts || Infinity);
+      this.reconnectionDelay(opts.reconnectionDelay || 1e3);
+      this.reconnectionDelayMax(opts.reconnectionDelayMax || 5e3);
+      this.randomizationFactor((_a = opts.randomizationFactor) !== null && _a !== void 0 ? _a : 0.5);
+      this.backoff = new Backoff({
+        min: this.reconnectionDelay(),
+        max: this.reconnectionDelayMax(),
+        jitter: this.randomizationFactor()
+      });
+      this.timeout(null == opts.timeout ? 2e4 : opts.timeout);
+      this._readyState = "closed";
+      this.uri = uri;
+      const _parser = opts.parser || esm_exports;
+      this.encoder = new _parser.Encoder();
+      this.decoder = new _parser.Decoder();
+      this._autoConnect = opts.autoConnect !== false;
+      if (this._autoConnect)
+        this.open();
+    }
+    reconnection(v) {
+      if (!arguments.length)
+        return this._reconnection;
+      this._reconnection = !!v;
+      return this;
+    }
+    reconnectionAttempts(v) {
+      if (v === void 0)
+        return this._reconnectionAttempts;
+      this._reconnectionAttempts = v;
+      return this;
+    }
+    reconnectionDelay(v) {
+      var _a;
+      if (v === void 0)
+        return this._reconnectionDelay;
+      this._reconnectionDelay = v;
+      (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMin(v);
+      return this;
+    }
+    randomizationFactor(v) {
+      var _a;
+      if (v === void 0)
+        return this._randomizationFactor;
+      this._randomizationFactor = v;
+      (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setJitter(v);
+      return this;
+    }
+    reconnectionDelayMax(v) {
+      var _a;
+      if (v === void 0)
+        return this._reconnectionDelayMax;
+      this._reconnectionDelayMax = v;
+      (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMax(v);
+      return this;
+    }
+    timeout(v) {
+      if (!arguments.length)
+        return this._timeout;
+      this._timeout = v;
+      return this;
+    }
+    maybeReconnectOnOpen() {
+      if (!this._reconnecting && this._reconnection && this.backoff.attempts === 0) {
+        this.reconnect();
+      }
+    }
+    open(fn) {
+      if (~this._readyState.indexOf("open"))
+        return this;
+      this.engine = new Socket(this.uri, this.opts);
+      const socket2 = this.engine;
+      const self2 = this;
+      this._readyState = "opening";
+      this.skipReconnect = false;
+      const openSubDestroy = on(socket2, "open", function() {
+        self2.onopen();
+        fn && fn();
+      });
+      const errorSub = on(socket2, "error", (err) => {
+        self2.cleanup();
+        self2._readyState = "closed";
+        this.emitReserved("error", err);
+        if (fn) {
+          fn(err);
+        } else {
+          self2.maybeReconnectOnOpen();
+        }
+      });
+      if (false !== this._timeout) {
+        const timeout = this._timeout;
+        if (timeout === 0) {
+          openSubDestroy();
+        }
+        const timer = this.setTimeoutFn(() => {
+          openSubDestroy();
+          socket2.close();
+          socket2.emit("error", new Error("timeout"));
+        }, timeout);
+        if (this.opts.autoUnref) {
+          timer.unref();
+        }
+        this.subs.push(function subDestroy() {
+          clearTimeout(timer);
+        });
+      }
+      this.subs.push(openSubDestroy);
+      this.subs.push(errorSub);
+      return this;
+    }
+    connect(fn) {
+      return this.open(fn);
+    }
+    onopen() {
+      this.cleanup();
+      this._readyState = "open";
+      this.emitReserved("open");
+      const socket2 = this.engine;
+      this.subs.push(on(socket2, "ping", this.onping.bind(this)), on(socket2, "data", this.ondata.bind(this)), on(socket2, "error", this.onerror.bind(this)), on(socket2, "close", this.onclose.bind(this)), on(this.decoder, "decoded", this.ondecoded.bind(this)));
+    }
+    onping() {
+      this.emitReserved("ping");
+    }
+    ondata(data) {
+      this.decoder.add(data);
+    }
+    ondecoded(packet) {
+      this.emitReserved("packet", packet);
+    }
+    onerror(err) {
+      this.emitReserved("error", err);
+    }
+    socket(nsp, opts) {
+      let socket2 = this.nsps[nsp];
+      if (!socket2) {
+        socket2 = new Socket2(this, nsp, opts);
+        this.nsps[nsp] = socket2;
+      }
+      return socket2;
+    }
+    _destroy(socket2) {
+      const nsps = Object.keys(this.nsps);
+      for (const nsp of nsps) {
+        const socket3 = this.nsps[nsp];
+        if (socket3.active) {
+          return;
+        }
+      }
+      this._close();
+    }
+    _packet(packet) {
+      const encodedPackets = this.encoder.encode(packet);
+      for (let i2 = 0; i2 < encodedPackets.length; i2++) {
+        this.engine.write(encodedPackets[i2], packet.options);
+      }
+    }
+    cleanup() {
+      this.subs.forEach((subDestroy) => subDestroy());
+      this.subs.length = 0;
+      this.decoder.destroy();
+    }
+    _close() {
+      this.skipReconnect = true;
+      this._reconnecting = false;
+      this.onclose("forced close");
+      if (this.engine)
+        this.engine.close();
+    }
+    disconnect() {
+      return this._close();
+    }
+    onclose(reason, description) {
+      this.cleanup();
+      this.backoff.reset();
+      this._readyState = "closed";
+      this.emitReserved("close", reason, description);
+      if (this._reconnection && !this.skipReconnect) {
+        this.reconnect();
+      }
+    }
+    reconnect() {
+      if (this._reconnecting || this.skipReconnect)
+        return this;
+      const self2 = this;
+      if (this.backoff.attempts >= this._reconnectionAttempts) {
+        this.backoff.reset();
+        this.emitReserved("reconnect_failed");
+        this._reconnecting = false;
+      } else {
+        const delay = this.backoff.duration();
+        this._reconnecting = true;
+        const timer = this.setTimeoutFn(() => {
+          if (self2.skipReconnect)
+            return;
+          this.emitReserved("reconnect_attempt", self2.backoff.attempts);
+          if (self2.skipReconnect)
+            return;
+          self2.open((err) => {
+            if (err) {
+              self2._reconnecting = false;
+              self2.reconnect();
+              this.emitReserved("reconnect_error", err);
+            } else {
+              self2.onreconnect();
+            }
+          });
+        }, delay);
+        if (this.opts.autoUnref) {
+          timer.unref();
+        }
+        this.subs.push(function subDestroy() {
+          clearTimeout(timer);
+        });
+      }
+    }
+    onreconnect() {
+      const attempt = this.backoff.attempts;
+      this._reconnecting = false;
+      this.backoff.reset();
+      this.emitReserved("reconnect", attempt);
+    }
+  };
+
+  // node_modules/socket.io-client/build/esm/index.js
+  var cache = {};
+  function lookup2(uri, opts) {
+    if (typeof uri === "object") {
+      opts = uri;
+      uri = void 0;
+    }
+    opts = opts || {};
+    const parsed = url(uri, opts.path || "/socket.io");
+    const source = parsed.source;
+    const id = parsed.id;
+    const path = parsed.path;
+    const sameNamespace = cache[id] && path in cache[id]["nsps"];
+    const newConnection = opts.forceNew || opts["force new connection"] || false === opts.multiplex || sameNamespace;
+    let io;
+    if (newConnection) {
+      io = new Manager(source, opts);
+    } else {
+      if (!cache[id]) {
+        cache[id] = new Manager(source, opts);
+      }
+      io = cache[id];
+    }
+    if (parsed.query && !opts.query) {
+      opts.query = parsed.queryKey;
+    }
+    return io.socket(parsed.path, opts);
+  }
+  Object.assign(lookup2, {
+    Manager,
+    Socket: Socket2,
+    io: lookup2,
+    connect: lookup2
+  });
+
+  // src/client/js/script.ts
+  var socket = lookup2();
+  var myTurn = true;
+  var symbol;
+  function getBoardState() {
+    let obj = {};
+    $(".board button").each(function() {
+      let id = $(this).attr("id");
+      if (id) {
+        obj[id] = $(this).text() || "";
+      }
+    });
+    return obj;
+  }
+  function isGameOver() {
+    let state = getBoardState();
+    let matches = ["XXX", "OOO"];
+    let rows = [
+      state.r0c0 + state.r0c1 + state.r0c2,
+      state.r1c0 + state.r1c1 + state.r1c2,
+      state.r2c0 + state.r2c1 + state.r2c2,
+      state.r0c0 + state.r1c0 + state.r2c0,
+      state.r0c1 + state.r1c1 + state.r2c1,
+      state.r0c2 + state.r1c2 + state.r2c2,
+      state.r0c0 + state.r1c1 + state.r2c2,
+      state.r0c2 + state.r1c1 + state.r2c0
+    ];
+    for (let elem of rows) {
+      if (elem === matches[0] || elem === matches[1]) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function renderTurnMessage() {
+    if (!myTurn) {
+      $("#message").text("Your opponent's turn");
+      $(".board button").prop("disabled", true);
+    } else {
+      $("#message").text("Your turn.");
+      $(".board button").removeAttr("disabled");
+    }
+  }
+  function makeMove(e) {
+    if (!myTurn) {
+      return;
+    }
+    if ($(e.target).text().length) {
+      return;
+    }
+    socket.emit("make.move", {
+      symbol,
+      position: $(e.target).attr("id")
+    });
+  }
+  socket.on("move.made", function(data) {
+    $("#" + data.position).text(data.symbol);
+    myTurn = data.symbol !== symbol;
+    if (!isGameOver()) {
+      renderTurnMessage();
+    } else {
+      if (myTurn) {
+        $("#message").text("You lost.");
+      } else {
+        $("#message").text("You won!");
+      }
+      $(".board button").prop("disabled", true);
+    }
+  });
+  socket.on("game.begin", function(data) {
+    symbol = data.symbol;
+    myTurn = symbol === "X";
+    renderTurnMessage();
+  });
+  socket.on("opponent.left", function() {
+    $("#message").text("Your opponent left the game.");
+    $(".board button").attr("disabled", "");
+  });
+  $(function() {
+    $(".board button").prop("disabled", true);
+    $(".board> button").on("click", makeMove);
+  });
+})();
