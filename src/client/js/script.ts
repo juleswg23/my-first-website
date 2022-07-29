@@ -2,7 +2,7 @@
 //const url = window.location.origin;
 
 import io from "socket.io-client";
-let socket = io();
+const socket = io();
 
 let myTurn: boolean = true;
 let symbol: string;

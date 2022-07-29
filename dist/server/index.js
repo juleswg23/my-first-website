@@ -4,11 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tictactoe_js_1 = require("./modules/tictactoe.js");
-// const http = require("http")
-// const Express = require("express");
-// const socketIo = require("socket.io");
-// const path = require('path'); //mine
-// const fs = require("fs");
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const fs_1 = __importDefault(require("fs"));
