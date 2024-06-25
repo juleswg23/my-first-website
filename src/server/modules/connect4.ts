@@ -14,6 +14,17 @@ export enum Result {
     NO_RESULT = "no-result"
 }
 
+/**
+ * Board Storage: starting at the bottom left and going up
+ * 5 11 17 23 29 35 41
+ * 4 10 16 22 28 34 40
+ * 3 9  15 21 27 33 39
+ * 2 8  14 20 26 32 38
+ * 1 7  13 19 25 31 37
+ * 0 6  12 18 24 30 36
+ */ 
+
+
 class Board {
     squares: Array<Player>;
     turn: Player;
@@ -49,23 +60,62 @@ class Board {
 
     // Check if the player went in an empty square
     isLegal(location: number): boolean {
-        return this.squares[location] == Player.EMPTY;
+        // Check if space is empty and if space is in bottom row or space is empty
+        return (this.squares[location] === Player.EMPTY) &&
+         (location % 6 === 0 || this.squares[location-1] !== Player.EMPTY);
     }
 
     // TODO check win function
     // Return one of the result enum possibilities
-    checkWin(): Result {
-        for (let arr of Board.possibleWins) {
-            if (this.squares[arr[0]] == this.squares[arr[1]] && 
-                this.squares[arr[0]] == this.squares[arr[2]] &&
-                this.squares[arr[0]] != Player.EMPTY) {
-                    return (this.squares[arr[0]] == Player.X ? Result.X : Result.Y);
-                }
+    checkWin(location: number): Result {
+        // Find row and column of location of move
+        let row = location % 6;
+        let col = Math.floor(location/6);
+
+        if (row >= 3 &&
+            this.squares[location] == this.squares[location-1] && 
+            this.squares[location] == this.squares[location-2] &&
+            this.squares[location] == this.squares[location-3] &&
+            this.squares[location] != Player.EMPTY) {
+                return this.squares[location] == Player.X ? Result.X : Result.Y;
+            }
+        
+        // Use these to keep track as we look for 4 in a row
+        let total: number = 0; // Count how many in a row we have
+        let curSquare: Player = Player.EMPTY;
+        let prevSquare: Player = Player.EMPTY;
+
+        // For loop checks for row win
+        for (let i = 0; i < 7; i++) {
+            curSquare = this.squares[row + i*6]
+            // If we match the previous square, add to total
+            if (curSquare === prevSquare) {
+                total++;
+            }
+            
+            // if the current square is empty, reset total
+            if (curSquare !== Player.EMPTY) {
+                total = 0;
+            } 
+
+            // If we have three pairs in a row, return winner
+            if (total === 3) {
+                return curSquare == Player.X ? Result.X : Result.Y 
+            }
+            //update prevSquare for next iteration of loop
+            prevSquare = curSquare;
         }
 
-        if (this.squares.includes(Player.EMPTY)) {
-            return Result.NO_RESULT;
-        }
+        // For loop checks diagonal increasing win
+
+
+        // For loop checks diagonal increasing win
+
+        
+
+        // if (this.squares.includes(Player.EMPTY)) {
+        //     return Result.NO_RESULT;
+        // }
         return Result.TIE;
     }
 
@@ -102,7 +152,7 @@ export class Game {
 
     gameMove(location: number): string {
         if (this.board.makeMove(location)) {
-            return this.board.checkWin().toString();
+            return this.board.checkWin(location).toString();
         }
         return "illegal-move";
     }
