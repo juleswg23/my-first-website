@@ -30,9 +30,9 @@ function isGameOver() {
 
     // We are creating a string for each possible winning combination of the cells
     let rows = [
-        state.r0c0 + state.r0c1 + state.r0c2, // 1st line
-        state.r1c0 + state.r1c1 + state.r1c2, // 2nd line
-        state.r2c0 + state.r2c1 + state.r2c2, // 3rd line
+        state.r0c0 + state.r0c1 + state.r0c2, // 1st row
+        state.r1c0 + state.r1c1 + state.r1c2, // 2nd row
+        state.r2c0 + state.r2c1 + state.r2c2, // 3rd row
         state.r0c0 + state.r1c0 + state.r2c0, // 1st column
         state.r0c1 + state.r1c1 + state.r2c1, // 2nd column
         state.r0c2 + state.r1c2 + state.r2c2, // 3rd column
