@@ -94,6 +94,8 @@ io.on("connection", function(socket: Socket) {
         const opp : Socket | null = opponentOf(socket)
         if (opp) {
             opp.emit("opponent.left");
+        } else if (unmatched === socket.id) { // if player leaves while waiting to be matched
+            unmatched = null;
         }
     });
 });
@@ -115,7 +117,7 @@ function join(socket: Socket) {
         console.log("%s was matched", socket.id);
 
         unmatched = null;
-    } else { //If 'unmatched' is not define it means the player (current socket) is waiting for an opponent (player #1)
+    } else { //If 'unmatched' is not defined it means the player (current socket) is waiting for an opponent (player #1)
         unmatched = socket.id;
         console.log("%s in queue", socket.id);
     }
