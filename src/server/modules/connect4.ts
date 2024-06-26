@@ -106,16 +106,67 @@ class Board {
             prevSquare = curSquare;
         }
 
+        prevSquare = Player.EMPTY;
         // For loop checks diagonal increasing win
+        for (let lo = Math.min(row, col); row-lo < 6 && col-lo < 7; lo--) {
+            curSquare = this.squares[(row-lo) + (col-lo)*6]
+            // If we match the previous square, add to total
+            if (curSquare === prevSquare) {
+                total++;
+            }
+            
+            // if the current square is empty, reset total
+            if (curSquare !== Player.EMPTY) {
+                total = 0;
+            } 
+
+            // If we have three pairs in a row, return winner
+            if (total === 3) {
+                console.log("Increasing diagonal win"); // TODO remove
+                return curSquare == Player.X ? Result.X : Result.Y 
+            }
+            //update prevSquare for next iteration of loop
+            prevSquare = curSquare;
+        }
+
+        prevSquare = Player.EMPTY;
+        // For loop checks diagonal *decreasing* win
+        for (let lo = Math.min(5-row, col); row+lo >= 0 && col-lo < 7; lo--) {
+            curSquare = this.squares[(row+lo) + (col-lo)*6]
+            // If we match the previous square, add to total
+            if (curSquare === prevSquare) {
+                total++;
+            }
+            
+            // if the current square is empty, reset total
+            if (curSquare !== Player.EMPTY) {
+                total = 0;
+            } 
+
+            // If we have three pairs in a row, return winner
+            if (total === 3) {
+                console.log("Increasing diagonal win"); // TODO remove
+                return curSquare == Player.X ? Result.X : Result.Y 
+            }
+            //update prevSquare for next iteration of loop
+            prevSquare = curSquare;
+        }
 
 
-        // For loop checks diagonal increasing win
-
+            /**
+     * Board Storage: starting at the bottom left and going up
+     * 5 11 17 23 29 35 41
+     * 4 10 16 22 28 34 40
+     * 3 9  15 21 27 33 39
+     * 2 8  14 20 26 32 38
+     * 1 7  13 19 25 31 37
+     * 0 6  12 18 24 30 36
+     */ 
         
 
-        // if (this.squares.includes(Player.EMPTY)) {
-        //     return Result.NO_RESULT;
-        // }
+        if (this.squares.includes(Player.EMPTY)) {
+            return Result.NO_RESULT;
+        }
         return Result.TIE;
     }
 
