@@ -67,6 +67,7 @@ class Board {
     }
 
     makeMove(location: number): boolean {
+        console.log("trying to make tic tac toe move");
         if (this.isLegal(location)) {
             // update tile
             this.squares[location] = this.turn;
@@ -86,7 +87,7 @@ class Board {
     }
 }
 
-export class Game {
+export class TTTGame {
     board: Board;
     player1: string;
     player2: string;

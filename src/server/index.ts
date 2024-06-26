@@ -1,4 +1,6 @@
-import { Game } from "./modules/tictactoe.js";
+import { TTTGame } from "./modules/tictactoe.js";
+import { ConnectFourGame } from "./modules/connect4.js";
+
 
 import Express from "express";
 import http from 'http';
@@ -35,7 +37,7 @@ type PlayerInfo = {
 const io = require("socket.io")(server);
 let clients: {[socketID: string]: Socket} = {};
 let players: {[socketID: string] : PlayerInfo } = {}; // opponent: socket.id of the opponent, symbol = "X" | "O", socket: player's socket
-let games: {[gameID: string]: Game }  = {};
+let games: {[gameID: string]: ConnectFourGame }  = {};
 let unmatched: string | null;
 
 io.on("connection", function(socket: Socket) {
@@ -44,10 +46,18 @@ io.on("connection", function(socket: Socket) {
     console.log("New client connected. ID: ", socket.id);
     clients[socket.id] = socket;
 
-    socket.on("disconnect", () => {// Bind event for that socket (player)
+    socket.on("disconnect", () => {
         console.log("Client disconnected. ID: ", socket.id);
         delete clients[socket.id];
         socket.broadcast.emit("clientdisconnect", id);
+
+        // Event to inform player that the opponent left
+        const opp : Socket | null = opponentOf(socket)
+        if (opp) {
+            opp.emit("opponent.left");
+        } else if (unmatched === socket.id) { // if player leaves while waiting to be matched
+            unmatched = null;
+        }
     });
 
     join(socket); // Fill 'players' data structure
@@ -81,22 +91,20 @@ io.on("connection", function(socket: Socket) {
         //validation
         let gameID = getGameID(socket, opp);
         let game = games[gameID];
-        game.gameMove(data.position);
-        console.log("Move attempted by player %s at pos %s", socket.id, data.position);
+        if (game.gameMove(data.position)) {
+            console.log("Illegal Move attempted by player %s at pos %s", socket.id, data.position);
+            console.log(typeof(data.position));
+        } else {
+            socket.emit("move.made", data); // Emit for the player who made the move
+            opp.emit("move.made", data); // Emit for the opponent
+        }
 
-
-        socket.emit("move.made", data); // Emit for the player who made the move
-        opp.emit("move.made", data); // Emit for the opponent
+        
     });
 
-    // Event to inform player that the opponent left
-    socket.on("disconnect", function() {
-        const opp : Socket | null = opponentOf(socket)
-        if (opp) {
-            opp.emit("opponent.left");
-        } else if (unmatched === socket.id) { // if player leaves while waiting to be matched
-            unmatched = null;
-        }
+    socket.on("choose.game", function(data): void {
+        
+
     });
 });
 
@@ -133,7 +141,7 @@ function opponentOf(socket: Socket): Socket | null {
 
 function newGame(socket: Socket, opponent: Socket): void {
     let gameID = getGameID(socket, opponent);
-    games[gameID] = new Game(socket.id, opponent.id);
+    games[gameID] = new ConnectFourGame(socket.id, opponent.id);
 }
 
 function getGameID(socket: Socket, opponent: Socket): string {

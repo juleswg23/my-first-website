@@ -45,19 +45,6 @@ class Board {
                         [0, 4, 8],
                         [2, 4, 6]]
 
-    // Deleted since I don't want to update it 
-    // prettyprint(): string {
-    //     return  "     |     |     \n" +
-    //             "  " + this.squares[0] + "  |  " + this.squares[1] + "  |  " + this.squares[2] + "  \n" +
-    //             "_____|_____|_____\n" +
-    //             "     |     |     \n" +
-    //             "  " + this.squares[3] + "  |  " + this.squares[4] + "  |  " + this.squares[5] + "  \n" +
-    //             "_____|_____|_____\n" +
-    //             "     |     |     \n" +
-    //             "  " + this.squares[6] + "  |  " + this.squares[7] + "  |  " + this.squares[8] + "  \n" +
-    //             "     |     |     \n"
-    // }
-
     // Check if the player went in an empty square
     isLegal(location: number): boolean {
         // Check if space is empty and if space is in bottom row or space is empty
@@ -152,18 +139,6 @@ class Board {
             prevSquare = curSquare;
         }
 
-
-            /**
-     * Board Storage: starting at the bottom left and going up
-     * 5 11 17 23 29 35 41
-     * 4 10 16 22 28 34 40
-     * 3 9  15 21 27 33 39
-     * 2 8  14 20 26 32 38
-     * 1 7  13 19 25 31 37
-     * 0 6  12 18 24 30 36
-     */ 
-        
-
         if (this.squares.includes(Player.EMPTY)) {
             return Result.NO_RESULT;
         }
@@ -171,7 +146,9 @@ class Board {
     }
 
     makeMove(location: number): boolean {
+        console.log("dsfakjhasfk");
         if (this.isLegal(location)) {
+            console.log("was legal move");
             // update tile
             this.squares[location] = this.turn;
             
@@ -190,7 +167,7 @@ class Board {
     }
 }
 
-export class Game {
+export class ConnectFourGame {
     board: Board;
     player1: string;
     player2: string;
@@ -201,10 +178,12 @@ export class Game {
         this.player2 = p2;
     }
 
-    gameMove(location: number): string {
+    gameMove(location: number) : string {
+        console.log("TYPE" + typeof(location));
         if (this.board.makeMove(location)) {
             return this.board.checkWin(location).toString();
         }
+        console.log("returning illegal move");
         return "illegal-move";
     }
 }
