@@ -146,7 +146,6 @@ class Board {
     }
 
     makeMove(location: number): boolean {
-        console.log("dsfakjhasfk");
         if (this.isLegal(location)) {
             console.log("was legal move");
             // update tile
@@ -179,7 +178,6 @@ export class ConnectFourGame {
     }
 
     gameMove(location: number) : string {
-        console.log("TYPE" + typeof(location));
         if (this.board.makeMove(location)) {
             return this.board.checkWin(location).toString();
         }
