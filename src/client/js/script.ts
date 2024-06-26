@@ -7,6 +7,9 @@ const socket = io();
 let myTurn: boolean = true;
 let symbol: string;
 
+
+
+
 function getBoardState() {
     let obj: {[key: string] : string } = {};
 
@@ -112,6 +115,12 @@ socket.on("opponent.left", function() {
 
 // Binding buttons on the board
 $(function() {
+    for (let i = 0; i < 9; i++) {
+        console.log("creating");
+        let elem = '<button id= "' + i + '"></button>';
+        $(elem).appendTo(".board");
+    }
+
     $(".board button").prop("disabled", true); // Disable board at the beginning
     $(".board> button").on("click", makeMove);
 });
