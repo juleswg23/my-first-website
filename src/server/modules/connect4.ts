@@ -8,9 +8,9 @@ enum Player {
 }
 
 export enum Result {
-    X = "x-wins",
-    Y = "y-wins",
-    TIE = "tie",
+    X = "X",
+    Y = "Y",
+    TIE = "TIE",
     NO_RESULT = "no-result"
 }
 
@@ -64,6 +64,7 @@ class Board {
             this.squares[location] == this.squares[location-2] &&
             this.squares[location] == this.squares[location-3] &&
             this.squares[location] != Player.EMPTY) {
+                console.log("Vertical win");
                 return this.squares[location] == Player.X ? Result.X : Result.Y;
             }
         
@@ -81,18 +82,20 @@ class Board {
             }
             
             // if the current square is empty, reset total
-            if (curSquare !== Player.EMPTY) {
+            if (curSquare === Player.EMPTY) {
                 total = 0;
             } 
 
             // If we have three pairs in a row, return winner
             if (total === 3) {
+                console.log("Horizontal win");
                 return curSquare == Player.X ? Result.X : Result.Y 
             }
             //update prevSquare for next iteration of loop
             prevSquare = curSquare;
         }
 
+        total = 0;
         prevSquare = Player.EMPTY;
         // For loop checks diagonal increasing win
         for (let lo = Math.min(row, col); row-lo < 6 && col-lo < 7; lo--) {
@@ -103,7 +106,7 @@ class Board {
             }
             
             // if the current square is empty, reset total
-            if (curSquare !== Player.EMPTY) {
+            if (curSquare === Player.EMPTY) {
                 total = 0;
             } 
 
@@ -116,6 +119,7 @@ class Board {
             prevSquare = curSquare;
         }
 
+        total = 0;
         prevSquare = Player.EMPTY;
         // For loop checks diagonal *decreasing* win
         for (let lo = Math.min(5-row, col); row+lo >= 0 && col-lo < 7; lo--) {
@@ -126,13 +130,13 @@ class Board {
             }
             
             // if the current square is empty, reset total
-            if (curSquare !== Player.EMPTY) {
+            if (curSquare === Player.EMPTY) {
                 total = 0;
             } 
 
             // If we have three pairs in a row, return winner
             if (total === 3) {
-                console.log("Increasing diagonal win"); // TODO remove
+                console.log("Decreasing diagonal win"); // TODO remove
                 return curSquare == Player.X ? Result.X : Result.Y 
             }
             //update prevSquare for next iteration of loop
@@ -140,14 +144,18 @@ class Board {
         }
 
         if (this.squares.includes(Player.EMPTY)) {
+            console.log("no-result");
+
             return Result.NO_RESULT;
         }
+        console.log("TIE");
         return Result.TIE;
     }
 
     makeMove(location: number): boolean {
+        console.log("Type of makeMove param: " + typeof(location));
         if (this.isLegal(location)) {
-            console.log("was legal move");
+            console.log("Move at: "+ location + " was legal move");
             // update tile
             this.squares[location] = this.turn;
             
@@ -181,7 +189,8 @@ export class ConnectFourGame {
         if (this.board.makeMove(location)) {
             return this.board.checkWin(location).toString();
         }
-        console.log("returning illegal move");
+        console.log("illllllegal move at: " + location);
         return "illegal-move";
     }
 }
+
