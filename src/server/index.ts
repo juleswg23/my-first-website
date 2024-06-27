@@ -91,12 +91,14 @@ io.on("connection", function(socket: Socket) {
         //validation
         let gameID = getGameID(socket, opp);
         let game = games[gameID];
-        if (game.gameMove(data.position)) {
-            console.log("Illegal Move attempted by player %s at pos %s", socket.id, data.position);
-            console.log(typeof(data.position));
-        } else {
+        let result: string = game.gameMove(Number(data.position))
+        if (result !== "illegal-move") {
+            data.result = result;
             socket.emit("move.made", data); // Emit for the player who made the move
             opp.emit("move.made", data); // Emit for the opponent
+        } else {
+            console.log("Illegal Move attempted by player %s at pos %s", socket.id, data.position);
+            console.log(typeof(data.position));
         }
 
         
