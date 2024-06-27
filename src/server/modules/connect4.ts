@@ -87,7 +87,6 @@ class Board {
             if (curSquare === Player.EMPTY) {
                 total = 0;
             } 
-            console.log("horizontal total " + total);
 
             // If we have three pairs in a row, return winner
             if (total === 3) {
@@ -197,7 +196,7 @@ export class ConnectFourGame {
         if (this.board.makeMove(location)) {
             return this.board.checkWin(location).toString();
         }
-        console.log("illllllegal move at: " + location);
+        console.log("illegal move at: " + location);
         return "illegal-move";
     }
 }
