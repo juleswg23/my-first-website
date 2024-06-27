@@ -1,13 +1,13 @@
 .board {
     margin: auto;
-    width: 490px;
+    width: 600px;
+    height: 600px;
 }
 
 .board button {
     height: 150px;
     width: 150px;
     float: left; 
-    margin: 5px;
     font-size: 3em;
 }
 

@@ -7,50 +7,28 @@ const socket = io();
 let myTurn: boolean = true;
 let symbol: string;
 
-
-
-
-function getBoardState() {
-    let obj: {[key: string] : string } = {};
-
-  /* We are creating an object where each attribute corresponds
-   to the name of a cell (r0c0, r0c1, ..., r2c2) and its value is
-   'X', 'O' or '' (empty).
-  */
-    $(".board button").each(function() {
-        let id: string | undefined = $(this).attr("id");
-        if (id) {
-            obj[id] = $(this).text() || "";
-        }
-    });
-
-    return obj;
-}
-
-function isGameOver() {
-    let state = getBoardState();
-    let matches = ["XXX", "OOO"]; // This are the string we will be looking for to declare the match over
-
-    // We are creating a string for each possible winning combination of the cells
-    let rows = [
-        state.r0c0 + state.r0c1 + state.r0c2, // 1st row
-        state.r1c0 + state.r1c1 + state.r1c2, // 2nd row
-        state.r2c0 + state.r2c1 + state.r2c2, // 3rd row
-        state.r0c0 + state.r1c0 + state.r2c0, // 1st column
-        state.r0c1 + state.r1c1 + state.r2c1, // 2nd column
-        state.r0c2 + state.r1c2 + state.r2c2, // 3rd column
-        state.r0c0 + state.r1c1 + state.r2c2, // Primary diagonal
-        state.r0c2 + state.r1c1 + state.r2c0  // Secondary diagonal
-    ];
-
-    // Loop through all the rows looking for a match
-    for (let elem of rows) {
-        if (elem === matches[0] || elem === matches[1]) {
-            return true;
-        }
+function buildPage() {
+    for (let i = 0; i < 42; i++) {
+        let elem = '<button id= "' + i + '"></button>';
+        $(elem).appendTo(".board");
     }
+    const container = $(".board");
 
-    return false;
+    const containerWidth = Number(container.width());
+    const containerHeight = Number(container.height());
+
+    const marginSize = 3;
+    const cellWidth = containerWidth / 7 - marginSize*3;
+    //const cellHeight = containerHeight / 6 - marginSize*3;
+
+    $(".board button").css({
+        width: cellWidth,
+        height: cellWidth,
+        margin: marginSize,
+        border: "1px solid black",        
+        boxSizing: "border-box",
+        float: "left"
+    });
 }
 
 function renderTurnMessage() {
@@ -79,20 +57,22 @@ function makeMove(e: JQuery.TriggeredEvent) {
 }
 
 // Bind event on players move
-socket.on("move.made", function(data: {[key: string] : "X" | "O"}) {
+socket.on("move.made", function(data: {[key: string] : "X" | "O" | string}) {
     $("#" + data.position).text(data.symbol); // Render move
 
     // If the symbol of the last move was the same as the current player
     // means that now is opponent's turn
     myTurn = data.symbol !== symbol;
 
-    if (!isGameOver()) { // If game isn't over show who's turn is this
+    if (data.result === "no-result") { // If game isn't over show who's turn is this
         renderTurnMessage();
     } else { // Else show win/lose message
-        if (myTurn) {
-            $("#message").text("You lost.");
-        } else {
+        if (data.result === "TIE") {
+            $("#message").text("Nobody won.");
+        } else if (data.result === symbol) {
             $("#message").text("You won!");
+        } else {
+            $("#message").text("You lost.");
         }
 
         $(".board button").prop("disabled", true); // Disable board
@@ -115,11 +95,7 @@ socket.on("opponent.left", function() {
 
 // Binding buttons on the board
 $(function() {
-    for (let i = 0; i < 9; i++) {
-        console.log("creating");
-        let elem = '<button id= "' + i + '"></button>';
-        $(elem).appendTo(".board");
-    }
+    buildPage();
 
     $(".board button").prop("disabled", true); // Disable board at the beginning
     $(".board> button").on("click", makeMove);
