@@ -8,18 +8,17 @@ let myTurn: boolean = true;
 let symbol: string;
 
 function buildPage() {
-    for (let i = 0; i < 42; i++) {
-        let elem = '<button id= "' + i + '"></button>';
-        $(elem).appendTo(".board");
+    for (let row = 5; row >= 0; row--) {
+        for (let col = 0; col < 7; col++) {
+            let elem = '<button id= "' + (row + col*6) + '"></button>';
+            $(elem).appendTo(".board");
+        }
     }
     const container = $(".board");
 
     const containerWidth = Number(container.width());
-    const containerHeight = Number(container.height());
-
     const marginSize = 3;
     const cellWidth = containerWidth / 7 - marginSize*3;
-    //const cellHeight = containerHeight / 6 - marginSize*3;
 
     $(".board button").css({
         width: cellWidth,
