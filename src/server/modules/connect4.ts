@@ -3,13 +3,13 @@
 
 enum Player {
     X = "red",
-    Y = "blue",
+    O = "blue",
     EMPTY = " "
 }
 
 export enum Result {
     X = "X",
-    Y = "Y",
+    O = "O",
     TIE = "TIE",
     NO_RESULT = "no-result"
 }
@@ -65,7 +65,7 @@ class Board {
             this.squares[location] == this.squares[location-3] &&
             this.squares[location] != Player.EMPTY) {
                 console.log("Vertical win");
-                return this.squares[location] == Player.X ? Result.X : Result.Y;
+                return this.squares[location] == Player.X ? Result.X : Result.O;
             }
         
         // Use these to keep track as we look for 4 in a row
@@ -85,11 +85,12 @@ class Board {
             if (curSquare === Player.EMPTY) {
                 total = 0;
             } 
+            console.log("horizontal total " + total);
 
             // If we have three pairs in a row, return winner
-            if (total === 3) {
+            if (total === 4) {
                 console.log("Horizontal win");
-                return curSquare == Player.X ? Result.X : Result.Y 
+                return curSquare == Player.X ? Result.X : Result.O;
             }
             //update prevSquare for next iteration of loop
             prevSquare = curSquare;
@@ -113,7 +114,7 @@ class Board {
             // If we have three pairs in a row, return winner
             if (total === 3) {
                 console.log("Increasing diagonal win"); // TODO remove
-                return curSquare == Player.X ? Result.X : Result.Y 
+                return curSquare == Player.X ? Result.X : Result.O;
             }
             //update prevSquare for next iteration of loop
             prevSquare = curSquare;
@@ -137,7 +138,7 @@ class Board {
             // If we have three pairs in a row, return winner
             if (total === 3) {
                 console.log("Decreasing diagonal win"); // TODO remove
-                return curSquare == Player.X ? Result.X : Result.Y 
+                return curSquare == Player.X ? Result.X : Result.O;
             }
             //update prevSquare for next iteration of loop
             prevSquare = curSquare;
@@ -161,7 +162,7 @@ class Board {
             
             // flip player turn
             if (this.turn == Player.X) {
-                this.turn = Player.Y;
+                this.turn = Player.O;
             } else {
                 this.turn = Player.X;
             }

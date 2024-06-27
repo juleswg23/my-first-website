@@ -5,7 +5,7 @@ import io from "socket.io-client";
 const socket = io();
 
 let myTurn: boolean = true;
-let symbol: string;
+let symbol: "X" | "O";
 
 function buildPage() {
     for (let row = 5; row >= 0; row--) {
@@ -66,6 +66,7 @@ socket.on("move.made", function(data: {[key: string] : "X" | "O" | string}) {
     if (data.result === "no-result") { // If game isn't over show who's turn is this
         renderTurnMessage();
     } else { // Else show win/lose message
+        console.log("This player's symbol: " + symbol + " winning result: " + data.result);
         if (data.result === "TIE") {
             $("#message").text("Nobody won.");
         } else if (data.result === symbol) {
