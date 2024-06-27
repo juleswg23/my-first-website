@@ -79,6 +79,8 @@ class Board {
             // If we match the previous square, add to total
             if (curSquare === prevSquare) {
                 total++;
+            } else {
+                total = 0;
             }
             
             // if the current square is empty, reset total
@@ -88,7 +90,7 @@ class Board {
             console.log("horizontal total " + total);
 
             // If we have three pairs in a row, return winner
-            if (total === 4) {
+            if (total === 3) {
                 console.log("Horizontal win");
                 return curSquare == Player.X ? Result.X : Result.O;
             }
@@ -104,12 +106,14 @@ class Board {
             // If we match the previous square, add to total
             if (curSquare === prevSquare) {
                 total++;
+            } else {
+                total = 0;
             }
             
             // if the current square is empty, reset total
             if (curSquare === Player.EMPTY) {
                 total = 0;
-            } 
+            }
 
             // If we have three pairs in a row, return winner
             if (total === 3) {
@@ -120,6 +124,7 @@ class Board {
             prevSquare = curSquare;
         }
 
+        //TODO try to merge both diagonals
         total = 0;
         prevSquare = Player.EMPTY;
         // For loop checks diagonal *decreasing* win
@@ -128,12 +133,14 @@ class Board {
             // If we match the previous square, add to total
             if (curSquare === prevSquare) {
                 total++;
+            } else {
+                total = 0;
             }
             
             // if the current square is empty, reset total
             if (curSquare === Player.EMPTY) {
                 total = 0;
-            } 
+            }
 
             // If we have three pairs in a row, return winner
             if (total === 3) {
