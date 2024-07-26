@@ -8,7 +8,8 @@
     "server",
     "socket",
     "io",
-    "tic tac toe"
+    "tic tac toe",
+    "connect four"
   ],
   "scripts": {
     "start": "node dist/server/index.js",
