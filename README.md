@@ -1,7 +1,7 @@
 <!---Update the image !! --->
 
 <p align="center">
-<img src="img/preview.png" width=256 />
+<img src="img/play.png" width=256 />
 </p>
 
 <h2 align="center"><i>Socket-Backed Multiplayer Connect Four</i></h2>
