@@ -1,7 +1,7 @@
 <!---Update the image !! --->
 
 <p align="center">
-<img src="img/play.png" width=256 />
+<img src="img/play.png" width=512 />
 </p>
 
 <h2 align="center"><i>Socket-Backed Multiplayer Connect Four</i></h2>
@@ -33,13 +33,16 @@ npm run start
 
 ### Client
 
-Instructions for downloading the client
+To connect as a client, visit localhost at port 8081, which can be found at this [link](http://localhost:8081/).
 
 ## Usage 
 
 At the website, simply visit it and wait for the next person to join!
 You will play the person who joins immediately before or after you.
 
+Make sure you are joining on the same server as the other client. So you may not have one connect via localhost and the other on the Koyeb url.
+
 ## Credits
 
-This project was made possible by ...
+This project was made possible by [Koyeb](app.koyeb.com) and is based on this [tic-tac-toe tutorial]([url](https://antoniomignano.medium.com/node-js-socket-io-express-tic-tac-toe-10cff9108f7)) written by Antonio Mignano.
+
